@@ -19,7 +19,8 @@ class App extends Component
 
         this.state = {
             screen: "login",
-            joiningState: ""
+            joiningState: "",
+            lobby: null
         }
     }
 
@@ -116,6 +117,19 @@ class App extends Component
         if (result.data.lobby)
         {
             this.setState({joiningState: result.data.lobby.state})
+
+            if (result.operation === "DISBANDED")
+            {
+                if (result.data.reason.code === "ROOM_READY")
+                {
+                    // Start the game!
+                    this.setState({lobby: result.data.lobby, screen: "game"})
+                }
+                else
+                {
+                    this.setState({screen: "mainMenu", joiningState: ""})
+                }
+            }
         }
 
         //  {"service":"lobby","operation":"DISBANDED","data":{"lobbyId":"22819:unranked:53","lobby":{"id":"22819:unranked:53","appId":"22819","lobbyType":"unranked","seq":53,"state":"starting","owner":"f6fa3e0e-6aac-497a-84e1-c8db6f545c12","rating":0,"lobbyTypeDef":{"roomConfig":null,"lobbyTypeId":"unranked","teams":{"player1":{"minUsers":1,"maxUsers":1,"autoAssign":true,"code":"player1"},"player2":{"minUsers":1,"maxUsers":1,"autoAssign":true,"code":"player2"}},"rules":{"allowEarlyStartWithoutMax":false,"forceOnTimeStartWithoutReady":true,"onTimeStartSecs":90,"everyReadyMinPercent":100,"everyReadyMinNum":2,"earliestStartSecs":0,"tooLateSecs":180},"launch":{"endpoint":"bcrsm","secret":"16ed75fa3e9b4e5b8ad189ec7f926118","serviceId":"307cab61-e26a-4ce8-bec1-dcbff3910dd7"},"scripts":{"filter":null},"desc":"Unranked match"},"settings":{},"version":1,"numMembers":2,"members":[{"profileId":"1dab1250-facb-419a-80cf-3d2de4e91e0b","name":"david2","pic":"","rating":0,"team":"player2","isReady":true,"extra":{}},{"profileId":"f6fa3e0e-6aac-497a-84e1-c8db6f545c12","name":"david","pic":"","rating":0,"team":"player1","isReady":true,"extra":{}}]},"reason":{"code":"ROOM_READY","desc":"Room successfully launched"}}}
