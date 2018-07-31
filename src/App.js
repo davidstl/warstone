@@ -3,6 +3,7 @@ import './App.css'
 import LoginScreen from './LoginScreen';
 import LoadingScreen from './LoadingScreen';
 import MainMenuScreen from './MainMenuScreen';
+import GameScreen from './GameScreen';
 let brainCloud = require("braincloud-react")
 
 let appId = "22819"
@@ -176,6 +177,16 @@ class App extends Component
                     <div className="App">
                         {this.renderTitle()}
                         <LoadingScreen text={`Looking for Opponent... ${this.state.joiningState}`}/>
+                    </div>
+                )
+                break
+            }
+            case "game":
+            {
+                return (
+                    <div className="App">
+                        {this.renderTitle()}
+                        <GameScreen />
                     </div>
                 )
                 break
