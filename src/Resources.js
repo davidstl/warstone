@@ -3,6 +3,7 @@ import Sprite from "./Sprite"
 export let _spriteSheet = null;
 
 export let SPRITE_SHEET_DIMENSION = {x:512.0, y:512.0}
+export let MAX_SPRITE_COUNT = 300
 
 // Define sprites
 export let _sprite_ribbon = new Sprite(95, 184, 8, 5);
@@ -158,46 +159,29 @@ function initBuffers(gl)
     const positionBuffer = gl.createBuffer();
     const colorBuffer = gl.createBuffer();
     const texCoordBuffer = gl.createBuffer();
-  
-    const positions = [
-        0,  0,
-        0,  100,
-        100, 100,
-        0,  0,
-        100, 100,
-        100, 0,
-    ]
-    const colors = [
-        1, 0, 0, 1,
-        0, 1, 0, 1,
-        0, 0, 1, 1,
-        1, 0, 0, 1,
-        0, 0, 1, 1,
-        1, 1, 0, 1
-    ]
-    const texCoords = [
-        0, 0,
-        0, 1,
-        1, 1,
-        0, 0,
-        1, 1,
-        1, 0
-    ]
+
+    let positionV = new Float32Array(MAX_SPRITE_COUNT * 6 * 2);
+    let colorV = new Float32Array(MAX_SPRITE_COUNT * 6 * 4);
+    let texCoordV = new Float32Array(MAX_SPRITE_COUNT * 6 * 2);
 
     // Create buffers for dynamic draw
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, positionV, gl.DYNAMIC_DRAW);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, colorV, gl.DYNAMIC_DRAW);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoords), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, texCoordV, gl.DYNAMIC_DRAW);
   
     return {
         position: positionBuffer,
         color: colorBuffer,
-        texCoord: texCoordBuffer
+        texCoord: texCoordBuffer,
+
+        positionV: positionV,
+        colorV: colorV,
+        texCoordV: texCoordV
     };
 }
 
@@ -207,8 +191,8 @@ export function initialize(gl)
     _spriteSheet = gl.createTexture()
     gl.bindTexture(gl.TEXTURE_2D, _spriteSheet)
     
-    // Fill the texture with a 1x1 purple pixel.
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 255, 255]))
+    // Fill the texture with a 1x1 invisible pixel so we don't see the texture until its loaded.
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 0]))
     
     // Asynchronously load an image
     let image = new Image()
@@ -219,6 +203,7 @@ export function initialize(gl)
         gl.bindTexture(gl.TEXTURE_2D, _spriteSheet)
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,gl.UNSIGNED_BYTE, image)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
     })
 
     let shaderProgram = initShaderProgram(gl, vsSource, fsSource)

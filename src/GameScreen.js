@@ -19,7 +19,6 @@ class GameScreen extends Component
     {
         GameView.initialize(this.refs.glCanvas)
 
-        // _gameView = new GameView(this);
         // _advanceButton = new AdvanceButton(_gameView, this);
         // _drawButton = new DrawButton(_gameView, this, _config);
         // _dialog = new Dialog(_gameView, this);

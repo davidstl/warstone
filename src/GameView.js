@@ -1,4 +1,6 @@
 import SpriteNode from "./SpriteNode"
+import { Z_FULL_FLUSH } from "zlib";
+import { MAX_SPRITE_COUNT } from "./Resources";
 
 let Resources = require("./Resources")
 let mat4 = require("gl-matrix/src/gl-matrix/mat4")
@@ -53,6 +55,10 @@ let _downSpriteNode = null // Sprite currently holding mouse down
 let _ribbonSprite = null
 let _anim = 0
 let _gameView = null
+let _spriteCount = 0
+let _vertexCount = 0
+let _quadVertexCount = 0
+let _currentColor = [1, 1, 1, 1]
 
 export let gl = null
 
@@ -218,11 +224,15 @@ function resetRenderStates()
         Resources._programInfo.uniformLocations.modelViewMatrix,
         false,
         modelViewMatrix);
+
+    _spriteCount = 0
+    _vertexCount = 0
+    _quadVertexCount = 0
 }
 
 export let glBegin = function()
 {
-
+    // Do nothing, irrelevant
 }
 
 export let glEnd = function()
@@ -232,22 +242,85 @@ export let glEnd = function()
 
 export let glColor4f = function(r, g, b, a)
 {
-
+    _currentColor[0] = r
+    _currentColor[1] = g
+    _currentColor[2] = b
+    _currentColor[3] = a
 }
 
 export let glTexCoord2f = function(u, v)
 {
-
+    Resources._vertexBuffer.texCoordV[_vertexCount * 2] = u;
+    Resources._vertexBuffer.texCoordV[_vertexCount * 2 + 1] = v;
 }
 
 export let glVertex2f = function(x, y)
 {
+    Resources._vertexBuffer.positionV[_vertexCount * 2] = x;
+    Resources._vertexBuffer.positionV[_vertexCount * 2 + 1] = y;
+    Resources._vertexBuffer.colorV[_vertexCount * 4] = _currentColor[0];
+    Resources._vertexBuffer.colorV[_vertexCount * 4 + 1] = _currentColor[1];
+    Resources._vertexBuffer.colorV[_vertexCount * 4 + 2] = _currentColor[2];
+    Resources._vertexBuffer.colorV[_vertexCount * 4 + 3] = _currentColor[3];
 
+    _vertexCount++
+    _quadVertexCount++
+    let index = _quadVertexCount % 4
+    if (index === 3)
+    {
+        Resources._vertexBuffer.texCoordV[_vertexCount * 2] = Resources._vertexBuffer.texCoordV[(_vertexCount - 3) * 2];
+        Resources._vertexBuffer.texCoordV[_vertexCount * 2 + 1] = Resources._vertexBuffer.texCoordV[(_vertexCount - 3) * 2 + 1];
+        Resources._vertexBuffer.positionV[_vertexCount * 2] = Resources._vertexBuffer.positionV[(_vertexCount - 3) * 2];
+        Resources._vertexBuffer.positionV[_vertexCount * 2 + 1] = Resources._vertexBuffer.positionV[(_vertexCount - 3) * 2 + 1];
+        Resources._vertexBuffer.colorV[_vertexCount * 4] = Resources._vertexBuffer.colorV[(_vertexCount - 3) * 4];
+        Resources._vertexBuffer.colorV[_vertexCount * 4 + 1] = Resources._vertexBuffer.colorV[(_vertexCount - 3) * 4 + 1];
+        Resources._vertexBuffer.colorV[_vertexCount * 4 + 2] = Resources._vertexBuffer.colorV[(_vertexCount - 3) * 4 + 2];
+        Resources._vertexBuffer.colorV[_vertexCount * 4 + 3] = Resources._vertexBuffer.colorV[(_vertexCount - 3) * 4 + 3];
+        _vertexCount++
+
+        Resources._vertexBuffer.texCoordV[_vertexCount * 2] = Resources._vertexBuffer.texCoordV[(_vertexCount - 2) * 2];
+        Resources._vertexBuffer.texCoordV[_vertexCount * 2 + 1] = Resources._vertexBuffer.texCoordV[(_vertexCount - 2) * 2 + 1];
+        Resources._vertexBuffer.positionV[_vertexCount * 2] = Resources._vertexBuffer.positionV[(_vertexCount - 2) * 2];
+        Resources._vertexBuffer.positionV[_vertexCount * 2 + 1] = Resources._vertexBuffer.positionV[(_vertexCount - 2) * 2 + 1];
+        Resources._vertexBuffer.colorV[_vertexCount * 4] = Resources._vertexBuffer.colorV[(_vertexCount - 2) * 4];
+        Resources._vertexBuffer.colorV[_vertexCount * 4 + 1] = Resources._vertexBuffer.colorV[(_vertexCount - 2) * 4 + 1];
+        Resources._vertexBuffer.colorV[_vertexCount * 4 + 2] = Resources._vertexBuffer.colorV[(_vertexCount - 2) * 4 + 2];
+        Resources._vertexBuffer.colorV[_vertexCount * 4 + 3] = Resources._vertexBuffer.colorV[(_vertexCount - 2) * 4 + 3];
+        _vertexCount++
+    }
+    else if (index === 0)
+    {
+        _spriteCount++
+        if (_spriteCount >= MAX_SPRITE_COUNT)
+        {
+            flush()
+        }
+    }
 }
 
 export let update = function(dt)
 {
 
+}
+
+export let flush = function()
+{
+    if (_spriteCount > 0)
+    {
+        gl.bindBuffer(gl.ARRAY_BUFFER, Resources._vertexBuffer.position);
+        gl.bufferData(gl.ARRAY_BUFFER, Resources._vertexBuffer.positionV, gl.DYNAMIC_DRAW);
+    
+        gl.bindBuffer(gl.ARRAY_BUFFER, Resources._vertexBuffer.color);
+        gl.bufferData(gl.ARRAY_BUFFER, Resources._vertexBuffer.colorV, gl.DYNAMIC_DRAW);
+    
+        gl.bindBuffer(gl.ARRAY_BUFFER, Resources._vertexBuffer.texCoord);
+        gl.bufferData(gl.ARRAY_BUFFER, Resources._vertexBuffer.texCoordV, gl.DYNAMIC_DRAW);
+
+        gl.drawArrays(gl.TRIANGLES, 0, _vertexCount)
+    }
+    _spriteCount = 0
+    _vertexCount = 0
+    _quadVertexCount = 0
 }
 
 export let renderView = function()
@@ -286,9 +359,5 @@ export let renderView = function()
         }
     })
 
-    {
-        const offset = 0;
-        const vertexCount = 6;
-        gl.drawArrays(gl.TRIANGLES, offset, vertexCount);
-    }
+    flush();
 }
