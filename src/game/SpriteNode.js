@@ -1,4 +1,6 @@
-class SpriteNode
+let Sprite = require('./Sprite')
+
+exports.SpriteNode = class
 {
     constructor(sprite, position, drawOrder, dimension, padding)
     {
@@ -101,11 +103,11 @@ class SpriteNode
         {
             if (this._is9Slice)
             {
-                this._sprite.render9Slice(this._position, this._dimension, this._9SlicePadding);
+                Sprite.render9Slice(this._sprite, this._position, this._dimension, this._9SlicePadding);
             }
             else
             {
-                this._sprite.renderPosDim(this._position, this._dimension);
+                Sprite.renderPosDim(this._sprite, this._position, this._dimension);
             }
         }
     }
@@ -133,5 +135,3 @@ class SpriteNode
                point.y <= this._position.y + this._dimension.y;
     }
 }
-
-export default SpriteNode

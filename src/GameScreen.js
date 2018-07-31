@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import './GameScreen.css'
 
+let Constants = require("./game/Constants")
+let Renderer = require("./game/Renderer")
+let Resources = require("./game/Resources")
 let GameView = require("./game/GameView")
 
 let FRAME_RATE = 30
@@ -18,7 +21,9 @@ class GameScreen extends Component
 
     componentDidMount()
     {
-        GameView.initialize(this.refs.glCanvas)
+        Renderer.initialize(this.refs.glCanvas)
+        Resources.initialize()
+        GameView.initialize()
 
         // Advance button on the right
         // this._advanceButton = new AdvanceButton(this);
@@ -46,7 +51,7 @@ class GameScreen extends Component
     {
         return (
             <div className="GameScreen">
-                <canvas ref="glCanvas" width={GameView.WIDTH * GameView.SCALE} height={GameView.HEIGHT * GameView.SCALE}></canvas> 
+                <canvas ref="glCanvas" width={Constants.WIDTH * Constants.SCALE} height={Constants.HEIGHT * Constants.SCALE}></canvas> 
             </div>
         )
     }
