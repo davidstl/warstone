@@ -2,6 +2,7 @@ let Constants = require('./Constants')
 let Resources = require('./Resources')
 let Renderer = require('./Renderer')
 let SpriteNode = require('./SpriteNode').SpriteNode
+let Input = require('./Input')
 
 let _gameView = null
 let _spriteNodes = []
@@ -73,6 +74,60 @@ exports.update = function(dt)
 
     // Sort spritenodes
     _spriteNodes.sort((a, b) => a.getDrawOrder() - b.getDrawOrder())
+
+    // Update mouse clicking stuff
+    let lastHoverSpriteNode = _hoverSpriteNode;
+    _hoverSpriteNode = null;
+    let clicked = null;
+
+    // We do it in reverse, because sprites rendered on top have priority
+    for (let i = _spriteNodes.length - 1; i >= 0; --i)
+    {
+        let spriteNode = _spriteNodes[i];
+        if (spriteNode.isClickThrough()) continue;
+        if (spriteNode.contains(Input.mousePos))
+        {
+            _hoverSpriteNode = spriteNode;
+            break;
+        }
+    }
+
+    // Downed
+    if (Input.isMouseJustDown() && _hoverSpriteNode != null && _hoverSpriteNode.isEnabled())
+    {
+        _downSpriteNode = _hoverSpriteNode;
+    }
+    
+    // Released
+    if (Input.isMouseJustReleased())
+    {
+        if (_downSpriteNode != null)
+        {
+            if (_downSpriteNode == _hoverSpriteNode && _hoverSpriteNode.isEnabled())
+            {
+                clicked = _downSpriteNode;
+            }
+            _downSpriteNode = null;
+        }
+    }
+
+    // Events
+    if (lastHoverSpriteNode != _hoverSpriteNode && _hoverSpriteNode != null && _hoverSpriteNode.isEnabled())
+    {
+        if (_hoverSpriteNode.onHovered)
+        {
+            _hoverSpriteNode.onHovered();
+        }
+    }
+    if (clicked != null)
+    {
+        if (clicked.onClicked)
+        {
+            clicked.onClicked();
+        }
+    }
+
+    Input.lastMouseDown = Input.mouseDown
 }
 
 exports.renderView = function()

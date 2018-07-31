@@ -184,7 +184,8 @@ exports.beginFrame = function()
     gl.uniform1i(_programInfo.uniformLocations.uSampler, 0);
 
     // Clear screen
-    gl.clearColor(Constants.BACKGROUND_COLOR[0], Constants.BACKGROUND_COLOR[1], Constants.BACKGROUND_COLOR[2], Constants.BACKGROUND_COLOR[3]);
+    // gl.clearColor(Constants.BACKGROUND_COLOR[0], Constants.BACKGROUND_COLOR[1], Constants.BACKGROUND_COLOR[2], Constants.BACKGROUND_COLOR[3]);
+    gl.clearColor(0, 0, 0, 1);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     // Set orthographic 2D view
