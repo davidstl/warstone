@@ -1,5 +1,4 @@
 import Sprite from "./Sprite"
-let GameView = require("./GameView")
 
 export let _spriteSheet = null;
 
@@ -108,7 +107,7 @@ const fsSource = `
 
     void main()
     {
-        gl_FragColor = texture2D(uSampler, vTexCoord);
+        gl_FragColor = vColor * texture2D(uSampler, vTexCoord);
     }
 `
 
@@ -202,10 +201,8 @@ function initBuffers(gl)
     };
 }
 
-export function initialize()
+export function initialize(gl)
 {
-    let gl = GameView.gl
-
     // Create a texture.
     _spriteSheet = gl.createTexture()
     gl.bindTexture(gl.TEXTURE_2D, _spriteSheet)

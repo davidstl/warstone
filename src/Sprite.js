@@ -1,5 +1,5 @@
-let Resources = require("./Resources")
 let GameView = require("./GameView")
+let Resources = require("./Resources")
 
 class Sprite
 {
