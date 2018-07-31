@@ -3,6 +3,8 @@ import './GameScreen.css'
 
 let GameView = require("./GameView")
 
+let FRAME_RATE = 30
+
 // Props:
 class GameScreen extends Component
 {
@@ -25,8 +27,10 @@ class GameScreen extends Component
 
         this.intervaleId = setInterval(() =>
         {
+            let dt = 1 / FRAME_RATE
+            GameView.update(dt)
             GameView.renderView()
-        }, 1000 / 30) // 30 FPS is enough for web
+        }, 1000 / FRAME_RATE)
     }
 
     componentWillUnmount()

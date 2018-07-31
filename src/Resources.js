@@ -78,30 +78,172 @@ export let _sprite_x = new Sprite(1, 208, 10, 10);
 
 export let _sprite_cardArtMap = {};
 
+export let _programInfo = null
+export let _vertexBuffer = null
+
+const vsSource = `
+    attribute vec4 aVertexPosition;
+    attribute vec4 aVertexColor;
+    attribute vec2 aVertexTexCoord;
+
+    uniform mat4 uModelViewMatrix;
+    uniform mat4 uProjectionMatrix;
+
+    varying lowp vec4 vColor;
+    varying highp vec2 vTexCoord;
+
+    void main()
+    {
+        gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+        vColor = aVertexColor;
+        vTexCoord = aVertexTexCoord;
+    }
+`
+
+const fsSource = `
+    varying lowp vec4 vColor;
+    varying highp vec2 vTexCoord;
+
+    uniform sampler2D uSampler;
+
+    void main()
+    {
+        gl_FragColor = texture2D(uSampler, vTexCoord);
+    }
+`
+
+function loadShader(gl, type, source)
+{
+    const shader = gl.createShader(type);
+
+    // Send the source to the shader object
+    gl.shaderSource(shader, source);
+
+    // Compile the shader program
+    gl.compileShader(shader);
+
+    // See if it compiled successfully
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
+    {
+        alert('An error occurred compiling the shaders: ' + gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+    }
+
+    return shader;
+}
+
+function initShaderProgram(gl, vsSource, fsSource)
+{
+    const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
+    const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
+
+    // Create the shader program
+    const shaderProgram = gl.createProgram();
+    gl.attachShader(shaderProgram, vertexShader);
+    gl.attachShader(shaderProgram, fragmentShader);
+    gl.linkProgram(shaderProgram);
+
+    // If creating the shader program failed, alert
+    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS))
+    {
+        alert('Unable to initialize the shader program: ' + gl.getProgramInfoLog(shaderProgram));
+        return null;
+    }
+
+    return shaderProgram;
+}
+
+function initBuffers(gl)
+{
+    const positionBuffer = gl.createBuffer();
+    const colorBuffer = gl.createBuffer();
+    const texCoordBuffer = gl.createBuffer();
+  
+    const positions = [
+        0,  0,
+        0,  100,
+        100, 100,
+        0,  0,
+        100, 100,
+        100, 0,
+    ]
+    const colors = [
+        1, 0, 0, 1,
+        0, 1, 0, 1,
+        0, 0, 1, 1,
+        1, 0, 0, 1,
+        0, 0, 1, 1,
+        1, 1, 0, 1
+    ]
+    const texCoords = [
+        0, 0,
+        0, 1,
+        1, 1,
+        0, 0,
+        1, 1,
+        1, 0
+    ]
+
+    // Create buffers for dynamic draw
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoords), gl.STATIC_DRAW);
+  
+    return {
+        position: positionBuffer,
+        color: colorBuffer,
+        texCoord: texCoordBuffer
+    };
+}
+
 export function initialize()
 {
-    let gl = GameView.gl;
+    let gl = GameView.gl
 
     // Create a texture.
-    _spriteSheet = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, _spriteSheet);
+    _spriteSheet = gl.createTexture()
+    gl.bindTexture(gl.TEXTURE_2D, _spriteSheet)
     
     // Fill the texture with a 1x1 purple pixel.
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 255, 255]));
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 255, 255]))
     
     // Asynchronously load an image
-    let image = new Image();
-    image.src = "spritesheet.png";
+    let image = new Image()
+    image.src = "spritesheet.png"
     image.addEventListener('load', () =>
     {
         // Now that the image has loaded make copy it to the texture.
-        gl.bindTexture(gl.TEXTURE_2D, _spriteSheet);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,gl.UNSIGNED_BYTE, image);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-    });
+        gl.bindTexture(gl.TEXTURE_2D, _spriteSheet)
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,gl.UNSIGNED_BYTE, image)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
+    })
 
-    generateFont();
-    loadCardArt();
+    let shaderProgram = initShaderProgram(gl, vsSource, fsSource)
+
+    _programInfo = {
+        program: shaderProgram,
+        attribLocations: {
+            vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+            vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
+            vertexTexCoord: gl.getAttribLocation(shaderProgram, 'aVertexTexCoord')
+        },
+        uniformLocations: {
+            projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
+            modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+            uSampler: gl.getUniformLocation(shaderProgram, 'uSampler')
+        },
+    };
+
+    _vertexBuffer = initBuffers(gl)
+
+    generateFont()
+    loadCardArt()
 }
 
 export function destroy()

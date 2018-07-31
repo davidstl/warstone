@@ -1,4 +1,7 @@
+import SpriteNode from "./SpriteNode"
+
 let Resources = require("./Resources")
+let mat4 = require("gl-matrix/src/gl-matrix/mat4")
 
 let gl = null
 
@@ -31,19 +34,19 @@ exports.CARD_HOVER_COLOR = [254 / 255, 231 / 255, 97 / 255, 1]
 exports.CARD_HOVER_OPPONENT_COLOR = [255 / 255, 0, 68 / 255, 1]
 exports.DIALOG_TEXT_COLOR = [90 / 255, 105 / 255, 136 / 255, 1]
 
-// public static final Vector2f TOP_DECK_POS = new Vector2f(37 - Resources._sprite_redCardBack.width, 106 - Resources._sprite_redCardBack.height)
-// public static final Vector2f TOP_HAND_POS = new Vector2f(WIDTH / 2, -Resources._sprite_blueCardBack.height + 40)
-// public static final Vector2f TOP_BOARD_POS = new Vector2f(WIDTH / 2 - 1, HEIGHT / 2 - Resources._sprite_blueCardBack.height - 6)
-// public static final Vector2f TOP_PLACE_POS = new Vector2f(272, 47)
-// public static final Vector2f TOP_DISCARDED_POS = new Vector2f(WIDTH + 50, HEIGHT / 2 - Resources._sprite_blueCardBack.height - 10)
-// public static final Vector2f BOTTOM_DECK_POS = new Vector2f(37 - Resources._sprite_redCardBack.width, 196 - Resources._sprite_redCardBack.height)
-// public static final Vector2f BOTTOM_HAND_POS = new Vector2f(WIDTH / 2, HEIGHT - 40)
-// public static final Vector2f BOTTOM_BOARD_POS = new Vector2f(WIDTH / 2 - 1, HEIGHT / 2 + 7)
-// public static final Vector2f BOTTOM_PLACE_POS = new Vector2f(272, 131)
-// public static final Vector2f BOTTOM_DISCARDED_POS = new Vector2f(WIDTH + 50, HEIGHT / 2 + 10)
-// public static final Vector2f ADVANCE_BUTTON_POS = new Vector2f(280, 111)
-// public static final float HAND_SPACING = Resources._sprite_blueCardBack.width -  10
-// public static final float BOARD_SPACING = Resources._sprite_blueCardBack.width + 1
+exports.TOP_DECK_POS = {x:37 - Resources._sprite_redCardBack.width, y:106 - Resources._sprite_redCardBack.height}
+exports.TOP_HAND_POS = {x:exports.WIDTH / 2, y:-Resources._sprite_blueCardBack.height + 40}
+exports.TOP_BOARD_POS = {x:exports.WIDTH / 2 - 1, y:exports.HEIGHT / 2 - Resources._sprite_blueCardBack.height - 6}
+exports.TOP_PLACE_POS = {x:272, y:47}
+exports.TOP_DISCARDED_POS = {x:exports.WIDTH + 50, y:exports.HEIGHT / 2 - Resources._sprite_blueCardBack.height - 10}
+exports.BOTTOM_DECK_POS = {x:37 - Resources._sprite_redCardBack.width, y:196 - Resources._sprite_redCardBack.height}
+exports.BOTTOM_HAND_POS = {x:exports.WIDTH / 2, y:exports.HEIGHT - 40}
+exports.BOTTOM_BOARD_POS = {x:exports.WIDTH / 2 - 1, y:exports.HEIGHT / 2 + 7}
+exports.BOTTOM_PLACE_POS = {x:272, y:131}
+exports.BOTTOM_DISCARDED_POS = {x:exports.WIDTH + 50, y:exports.HEIGHT / 2 + 10}
+exports.ADVANCE_BUTTON_POS = {x:280, y:111}
+exports.HAND_SPACING = Resources._sprite_blueCardBack.width - 10
+exports.BOARD_SPACING = Resources._sprite_blueCardBack.width + 1
 
 let _spriteNodes = []
 let _isInverted = false // Player1 will view the board inverted as it is represented by data
@@ -54,21 +57,6 @@ let _anim = 0
 let _gameView = null
 
 exports.gl = null
-
-exports.initialize = function(canvas)
-{
-    // Initialize webgl
-    gl = canvas.getContext("webgl")
-    exports.gl = gl
-    
-    if (!gl)
-    {
-        alert("Cannot initialize WebGL. Your browser or computer doesn't support it.")
-        return
-    }
-
-    Resources.initialize()
-}
 
 // Get the sprite currently hovered by the mouse
 exports.getHovered = function()
@@ -101,6 +89,40 @@ exports.removeSpriteNode = function(spriteNode)
     _spriteNodes.filter(sn => sn !== spriteNode)
 }
 
+exports.initialize = function(canvas)
+{
+    // Initialize webgl
+    gl = canvas.getContext("webgl")
+    exports.gl = gl
+    
+    if (!gl)
+    {
+        alert("Cannot initialize WebGL. Your browser or computer doesn't support it.")
+        return
+    }
+
+    Resources.initialize()
+
+    _gameView = new SpriteNode();
+    _gameView.setDrawOrder(exports.DRAW_ORDER_BACKGROUND);
+    _gameView.setDimension({x:exports.WIDTH, y:exports.HEIGHT});
+    _gameView.setEnabled(true);
+    exports.addSpriteNode(_gameView);
+
+    // Add the sprite for the ribbon at the middle
+    _ribbonSprite = new SpriteNode(Resources._sprite_ribbon, {x:42, y:119}, exports.DRAW_ORDER_BACKGROUND + 1, {x:237, y:3}, {x:4, y:3, z:4, w:0});
+    _ribbonSprite.setClickThrough(true);
+    exports.addSpriteNode(_ribbonSprite);
+
+    // BG Deco on each sides
+    let deco = new SpriteNode(Resources._sprite_decoBg, {x:39, y:47}, exports.DRAW_ORDER_BACKGROUND + 1, {x:240, y:71}, {x:7, y:7, z:7, w:7});
+    deco.setClickThrough(true);
+    exports.addSpriteNode(deco);
+    deco = new SpriteNode(Resources._sprite_decoBg, {x:39, y:exports.HEIGHT - 47 - 70}, exports.DRAW_ORDER_BACKGROUND + 1, {x:240, y:71}, {x:7, y:7, z:7, w:7});
+    deco.setClickThrough(true);
+    exports.addSpriteNode(deco);
+}
+
 function resetRenderStates()
 {
     // Render states
@@ -109,20 +131,126 @@ function resetRenderStates()
     gl.enable(gl.BLEND); // Blend on
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); // Alpha blend
     gl.viewport(0, 0, exports.WIDTH * exports.SCALE, exports.HEIGHT * exports.SCALE); // Viewport cover all window
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, Resources._spriteSheet); // Bind our only texture used, the sprite sheet
 
-    // Setup orthographic view
-    // gl.matrixMode(gl.PROJECTION);
-    // gl.loadIdentity();
-    // gl.ortho(0, exports.WIDTH, exports.HEIGHT, 0, 1, -1);
-    // gl.matrixMode(gl.MODELVIEW);
-    // gl.loadIdentity();
+    // Bind our only texture used, the sprite sheet
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, Resources._spriteSheet);
+    gl.uniform1i(Resources._programInfo.uniformLocations.uSampler, 0);
 
     // Clear screen
-    // gl.clearColor(exports.BACKGROUND_COLOR[0], exports.BACKGROUND_COLOR[1], exports.BACKGROUND_COLOR[2], exports.BACKGROUND_COLOR[3]);
-    gl.clearColor(0, 0, 0, 1);
+    gl.clearColor(exports.BACKGROUND_COLOR[0], exports.BACKGROUND_COLOR[1], exports.BACKGROUND_COLOR[2], exports.BACKGROUND_COLOR[3]);
     gl.clear(gl.COLOR_BUFFER_BIT);
+
+    // Set orthographic 2D view
+    let projectionMatrix = mat4.create();
+    mat4.ortho(projectionMatrix, 0, exports.WIDTH, exports.HEIGHT, 0, -999, 999)
+
+    // Set the drawing position to the "identity" point, which is top left
+    let modelViewMatrix = mat4.create();
+
+    // Tell WebGL how to pull out the positions from the position
+    // buffer into the vertexPosition attribute.
+    {
+        const numComponents = 2;  // pull out 2 values per iteration
+        const type = gl.FLOAT;    // the data in the buffer is 32bit floats
+        const normalize = false;  // don't normalize
+        const stride = 0;         // how many bytes to get from one set of values to the next
+                                  // 0 = use type and numComponents above
+        const offset = 0;         // how many bytes inside the buffer to start from
+        gl.bindBuffer(gl.ARRAY_BUFFER, Resources._vertexBuffer.position);
+        gl.vertexAttribPointer(
+            Resources._programInfo.attribLocations.vertexPosition,
+            numComponents,
+            type,
+            normalize,
+            stride,
+            offset);
+        gl.enableVertexAttribArray(
+            Resources._programInfo.attribLocations.vertexPosition);
+    }
+
+    // Tell WebGL how to pull out the colors from the color buffer
+    // into the vertexColor attribute.
+    {
+        const numComponents = 4;
+        const type = gl.FLOAT;
+        const normalize = false;
+        const stride = 0;
+        const offset = 0;
+        gl.bindBuffer(gl.ARRAY_BUFFER, Resources._vertexBuffer.color);
+        gl.vertexAttribPointer(
+            Resources._programInfo.attribLocations.vertexColor,
+            numComponents,
+            type,
+            normalize,
+            stride,
+            offset);
+        gl.enableVertexAttribArray(
+            Resources._programInfo.attribLocations.vertexColor);
+    }
+
+    // Tell WebGL how to pull out the colors from the color buffer
+    // into the vertexColor attribute.
+    {
+        const numComponents = 2;
+        const type = gl.FLOAT;
+        const normalize = false;
+        const stride = 0;
+        const offset = 0;
+        gl.bindBuffer(gl.ARRAY_BUFFER, Resources._vertexBuffer.texCoord);
+        gl.vertexAttribPointer(
+            Resources._programInfo.attribLocations.vertexTexCoord,
+            numComponents,
+            type,
+            normalize,
+            stride,
+            offset);
+        gl.enableVertexAttribArray(
+            Resources._programInfo.attribLocations.vertexTexCoord);
+    }
+
+    // Tell WebGL to use our program when drawing
+    gl.useProgram(Resources._programInfo.program);
+
+    // Set the shader uniforms
+    gl.uniformMatrix4fv(
+        Resources._programInfo.uniformLocations.projectionMatrix,
+        false,
+        projectionMatrix);
+    gl.uniformMatrix4fv(
+        Resources._programInfo.uniformLocations.modelViewMatrix,
+        false,
+        modelViewMatrix);
+}
+
+exports.glBegin = function()
+{
+
+}
+
+exports.glEnd = function()
+{
+    // Do nothing. We just flush at the end of the frame or when vertex buffer is full
+}
+
+exports.glColor4f = function(r, g, b, a)
+{
+
+}
+
+exports.glTexCoord2f = function(u, v)
+{
+
+}
+
+exports.glVertex2f = function(x, y)
+{
+
+}
+
+exports.update = function(dt)
+{
+
 }
 
 exports.renderView = function()
@@ -160,4 +288,10 @@ exports.renderView = function()
             spriteNode.renderDisabled();
         }
     })
+
+    {
+        const offset = 0;
+        const vertexCount = 6;
+        gl.drawArrays(gl.TRIANGLES, offset, vertexCount);
+    }
 }

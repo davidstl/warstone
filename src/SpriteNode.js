@@ -16,119 +16,118 @@ class SpriteNode
 
     getPosition()
     {
-        return _position;
+        return this._position;
     }
 
     setPosition(position)
     {
-        _position = {...position};
+        this._position = {...position};
     }
 
     // Check if a sprite is enabled
     isEnabled()
     {
-        return _enabled;
+        return this._enabled;
     }
 
     // Disabling a sprite will disallow clicks and hover state on it.
     // It will still block clicks on stuff behind it though.
     setEnabled(enabled)
     {
-        _enabled = enabled;
+        this._enabled = enabled;
     }
 
     isClickThrough()
     {
-        return _clickTrough;
+        return this._clickTrough;
     }
 
     setClickThrough(clickThrough)
     {
-        _clickTrough = clickThrough;
+        this._clickTrough = clickThrough;
     }
 
     // The rendering order. Higher the number, higher on top the sprite will appear
     setDrawOrder(drawOrder)
     {
-        _drawOrder = drawOrder;
+        this._drawOrder = drawOrder;
     }
 
     getDrawOrder()
     {
-        return _drawOrder;
+        return this._drawOrder;
     }
 
     setSprite(sprite)
     {
-        _sprite = sprite;
-        _dimension.x = _sprite.width;
-        _dimension.y = _sprite.height;
+        this._sprite = sprite;
+        this._dimension.x = this._sprite.width;
+        this._dimension.y = this._sprite.height;
     }
 
     getSprite()
     {
-        return _sprite;
+        return this._sprite;
     }
 
     getDimension()
     {
-        return _dimension;
+        return this._dimension;
     }
 
     setDimension(dimension)
     {
-        _dimension = {...dimension};
+        this._dimension = {...dimension};
     }
 
     set9Slice(dimension, padding)
     {
         if (!dimension)
         {
-            _is9Slice = false;
+            this._is9Slice = false;
             return;
         }
-        _is9Slice = true;
-        _dimension = {...dimension}
-        _9SlicePadding = {...padding}
+        this._is9Slice = true;
+        this._dimension = {...dimension}
+        this._9SlicePadding = {...padding}
     }
 
     render()
     {
-        if (_sprite)
+        if (this._sprite)
         {
-            if (_is9Slice)
+            if (this._is9Slice)
             {
-                _sprite.render9Slice(_position, _dimension, _9SlicePadding);
+                this._sprite.render9Slice(this._position, this._dimension, this._9SlicePadding);
             }
             else
             {
-                _sprite.render(_position, _dimension);
+                this._sprite.renderPosDim(this._position, this._dimension);
             }
         }
     }
 
     renderHover()
     {
-        render();
+        this.render();
     }
 
     renderDown()
     {
-        renderHover();
+        this.renderHover();
     }
 
     renderDisabled()
     {
-        render();
+        this.render();
     }
 
     contains(point)
     {
-        return
-            point.x >= _position.x &&
-            point.x <= _position.x + _dimension.x &&
-            point.y >= _position.y &&
-            point.y <= _position.y + _dimension.y;
+        return point.x >= this._position.x &&
+               point.x <= this._position.x + this._dimension.x &&
+               point.y >= this._position.y &&
+               point.y <= this._position.y + this._dimension.y;
     }
 
     onHovered()
