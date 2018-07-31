@@ -12,6 +12,9 @@ class SpriteNode
         this._is9Slice = padding ? true : false
         this._enabled = false
         this._clickTrough = false
+
+        this._onClicked = null
+        this._onHovered = null
     }
 
     getPosition()
@@ -128,14 +131,6 @@ class SpriteNode
                point.x <= this._position.x + this._dimension.x &&
                point.y >= this._position.y &&
                point.y <= this._position.y + this._dimension.y;
-    }
-
-    onHovered()
-    {
-    }
-
-    onClicked()
-    {
     }
 }
 

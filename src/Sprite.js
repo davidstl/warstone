@@ -1,4 +1,4 @@
-let GameView = require("./GameView")
+import {glBegin, glEnd, glTexCoord2f, glVertex2f, glColor4f} from "./GameView"
 let Resources = require("./Resources")
 
 class Sprite
@@ -34,23 +34,23 @@ class Sprite
         let y = Math.floor(pos.y);
         let u1 = this.u1;
         let v1 = this.v1;
-        GameView.glBegin();
-            GameView.glTexCoord2f(u1, v1);
-            GameView.glVertex2f(x, y);
-            GameView.glTexCoord2f(u1, (v1 + dimension.y / Resources.SPRITE_SHEET_DIMENSION.y));
-            GameView.glVertex2f(x, y + dimension.y);
-            GameView.glTexCoord2f((u1 + dimension.x / Resources.SPRITE_SHEET_DIMENSION.x), (v1 + dimension.y / Resources.SPRITE_SHEET_DIMENSION.y));
-            GameView.glVertex2f(x + dimension.x, y + dimension.y);
-            GameView.glTexCoord2f((u1 + dimension.x / Resources.SPRITE_SHEET_DIMENSION.x), v1);
-            GameView.glVertex2f(x + dimension.x, y);
-        GameView.glEnd();
+        glBegin();
+            glTexCoord2f(u1, v1);
+            glVertex2f(x, y);
+            glTexCoord2f(u1, (v1 + dimension.y / Resources.SPRITE_SHEET_DIMENSION.y));
+            glVertex2f(x, y + dimension.y);
+            glTexCoord2f((u1 + dimension.x / Resources.SPRITE_SHEET_DIMENSION.x), (v1 + dimension.y / Resources.SPRITE_SHEET_DIMENSION.y));
+            glVertex2f(x + dimension.x, y + dimension.y);
+            glTexCoord2f((u1 + dimension.x / Resources.SPRITE_SHEET_DIMENSION.x), v1);
+            glVertex2f(x + dimension.x, y);
+        glEnd();
     }
 
     renderPosDimColor(pos, dimension, color)
     {
-        GameView.glColor4f(color[0], color[1], color[2], color[3]);
+        glColor4f(color[0], color[1], color[2], color[3]);
         this.renderPosDim(pos, dimension);
-        GameView.glColor4f(1, 1, 1, 1);
+        glColor4f(1, 1, 1, 1);
     }
 
     render9Slice(pos, dimension, padding)
@@ -76,88 +76,88 @@ class Sprite
         let u2 = this.u2;
         let v2 = this.v2;
 
-        GameView.glBegin();
-            GameView.glTexCoord2f(u1, v1);
-            GameView.glVertex2f(x, y);
-            GameView.glTexCoord2f(u1, v_top);
-            GameView.glVertex2f(x, y + top);
-            GameView.glTexCoord2f(u_left, v_top);
-            GameView.glVertex2f(x + left, y + top);
-            GameView.glTexCoord2f(u_left, v1);
-            GameView.glVertex2f(x + left, y);
+        glBegin();
+            glTexCoord2f(u1, v1);
+            glVertex2f(x, y);
+            glTexCoord2f(u1, v_top);
+            glVertex2f(x, y + top);
+            glTexCoord2f(u_left, v_top);
+            glVertex2f(x + left, y + top);
+            glTexCoord2f(u_left, v1);
+            glVertex2f(x + left, y);
 
-            GameView.glTexCoord2f(u_left, v1);
-            GameView.glVertex2f(x + left, y);
-            GameView.glTexCoord2f(u_left, v_top);
-            GameView.glVertex2f(x + left, y + top);
-            GameView.glTexCoord2f(u_right, v_top);
-            GameView.glVertex2f(x + w - right, y + top);
-            GameView.glTexCoord2f(u_right, v1);
-            GameView.glVertex2f(x + w - right, y);
+            glTexCoord2f(u_left, v1);
+            glVertex2f(x + left, y);
+            glTexCoord2f(u_left, v_top);
+            glVertex2f(x + left, y + top);
+            glTexCoord2f(u_right, v_top);
+            glVertex2f(x + w - right, y + top);
+            glTexCoord2f(u_right, v1);
+            glVertex2f(x + w - right, y);
             
-            GameView.glTexCoord2f(u_right, v1);
-            GameView.glVertex2f(x + w - right, y);
-            GameView.glTexCoord2f(u_right, v_top);
-            GameView.glVertex2f(x + w - right, y + top);
-            GameView.glTexCoord2f(u2, v_top);
-            GameView.glVertex2f(x + w, y + top);
-            GameView.glTexCoord2f(u2, v1);
-            GameView.glVertex2f(x + w, y);
+            glTexCoord2f(u_right, v1);
+            glVertex2f(x + w - right, y);
+            glTexCoord2f(u_right, v_top);
+            glVertex2f(x + w - right, y + top);
+            glTexCoord2f(u2, v_top);
+            glVertex2f(x + w, y + top);
+            glTexCoord2f(u2, v1);
+            glVertex2f(x + w, y);
             
-            GameView.glTexCoord2f(u1, v_top);
-            GameView.glVertex2f(x, y + top);
-            GameView.glTexCoord2f(u1, v_bottom);
-            GameView.glVertex2f(x, y + h - bottom);
-            GameView.glTexCoord2f(u_left, v_bottom);
-            GameView.glVertex2f(x + left, y + h - bottom);
-            GameView.glTexCoord2f(u_left, v_top);
-            GameView.glVertex2f(x + left, y + top);
+            glTexCoord2f(u1, v_top);
+            glVertex2f(x, y + top);
+            glTexCoord2f(u1, v_bottom);
+            glVertex2f(x, y + h - bottom);
+            glTexCoord2f(u_left, v_bottom);
+            glVertex2f(x + left, y + h - bottom);
+            glTexCoord2f(u_left, v_top);
+            glVertex2f(x + left, y + top);
 
-            GameView.glTexCoord2f(u_left, v_top);
-            GameView.glVertex2f(x + left, y + top);
-            GameView.glTexCoord2f(u_left, v_bottom);
-            GameView.glVertex2f(x + left, y + h - bottom);
-            GameView.glTexCoord2f(u_right, v_bottom);
-            GameView.glVertex2f(x + w - right, y + h - bottom);
-            GameView.glTexCoord2f(u_right, v_top);
-            GameView.glVertex2f(x + w - right, y + top);
+            glTexCoord2f(u_left, v_top);
+            glVertex2f(x + left, y + top);
+            glTexCoord2f(u_left, v_bottom);
+            glVertex2f(x + left, y + h - bottom);
+            glTexCoord2f(u_right, v_bottom);
+            glVertex2f(x + w - right, y + h - bottom);
+            glTexCoord2f(u_right, v_top);
+            glVertex2f(x + w - right, y + top);
             
-            GameView.glTexCoord2f(u_right, v_top);
-            GameView.glVertex2f(x + w - right, y + top);
-            GameView.glTexCoord2f(u_right, v_bottom);
-            GameView.glVertex2f(x + w - right, y + h - bottom);
-            GameView.glTexCoord2f(u2, v_bottom);
-            GameView.glVertex2f(x + w, y + h - bottom);
-            GameView.glTexCoord2f(u2, v_top);
-            GameView.glVertex2f(x + w, y + top);
+            glTexCoord2f(u_right, v_top);
+            glVertex2f(x + w - right, y + top);
+            glTexCoord2f(u_right, v_bottom);
+            glVertex2f(x + w - right, y + h - bottom);
+            glTexCoord2f(u2, v_bottom);
+            glVertex2f(x + w, y + h - bottom);
+            glTexCoord2f(u2, v_top);
+            glVertex2f(x + w, y + top);
             
-            GameView.glTexCoord2f(u1, v_bottom);
-            GameView.glVertex2f(x, y + h - bottom);
-            GameView.glTexCoord2f(u1, v2);
-            GameView.glVertex2f(x, y + h);
-            GameView.glTexCoord2f(u_left, v2);
-            GameView.glVertex2f(x + left, y + h);
-            GameView.glTexCoord2f(u_left, v_bottom);
-            GameView.glVertex2f(x + left, y + h - bottom);
+            glTexCoord2f(u1, v_bottom);
+            glVertex2f(x, y + h - bottom);
+            glTexCoord2f(u1, v2);
+            glVertex2f(x, y + h);
+            glTexCoord2f(u_left, v2);
+            glVertex2f(x + left, y + h);
+            glTexCoord2f(u_left, v_bottom);
+            glVertex2f(x + left, y + h - bottom);
 
-            GameView.glTexCoord2f(u_left, v_bottom);
-            GameView.glVertex2f(x + left, y + h - bottom);
-            GameView.glTexCoord2f(u_left, v2);
-            GameView.glVertex2f(x + left, y + h);
-            GameView.glTexCoord2f(u_right, v2);
-            GameView.glVertex2f(x + w - right, y + h);
-            GameView.glTexCoord2f(u_right, v_bottom);
-            GameView.glVertex2f(x + w - right, y + h - bottom);
+            glTexCoord2f(u_left, v_bottom);
+            glVertex2f(x + left, y + h - bottom);
+            glTexCoord2f(u_left, v2);
+            glVertex2f(x + left, y + h);
+            glTexCoord2f(u_right, v2);
+            glVertex2f(x + w - right, y + h);
+            glTexCoord2f(u_right, v_bottom);
+            glVertex2f(x + w - right, y + h - bottom);
             
-            GameView.glTexCoord2f(u_right, v_bottom);
-            GameView.glVertex2f(x + w - right, y + h - bottom);
-            GameView.glTexCoord2f(u_right, v2);
-            GameView.glVertex2f(x + w - right, y + h);
-            GameView.glTexCoord2f(u2, v2);
-            GameView.glVertex2f(x + w, y + h);
-            GameView.glTexCoord2f(u2, v_bottom);
-            GameView.glVertex2f(x + w, y + h - bottom);
-        GameView.glEnd();
+            glTexCoord2f(u_right, v_bottom);
+            glVertex2f(x + w - right, y + h - bottom);
+            glTexCoord2f(u_right, v2);
+            glVertex2f(x + w - right, y + h);
+            glTexCoord2f(u2, v2);
+            glVertex2f(x + w, y + h);
+            glTexCoord2f(u2, v_bottom);
+            glVertex2f(x + w, y + h - bottom);
+        glEnd();
     }
 }
 

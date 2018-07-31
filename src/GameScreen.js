@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './GameScreen.css'
 
-let GameView = require("./GameView")
+let GameView = require("./game/GameView")
 
 let FRAME_RATE = 30
 
@@ -13,13 +13,15 @@ class GameScreen extends Component
         super()
 
         this.intervaleId = null
+        this._advanceButton = null
     }
 
     componentDidMount()
     {
         GameView.initialize(this.refs.glCanvas)
 
-        // _advanceButton = new AdvanceButton(_gameView, this);
+        // Advance button on the right
+        // this._advanceButton = new AdvanceButton(this);
         // _drawButton = new DrawButton(_gameView, this, _config);
         // _dialog = new Dialog(_gameView, this);
         // _descriptionDialog = new DescriptionDialog(_gameView);
