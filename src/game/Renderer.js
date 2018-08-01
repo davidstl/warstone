@@ -345,14 +345,14 @@ exports.flush = function()
 {
     if (_spriteCount > 0)
     {
-        gl.bindBuffer(gl.ARRAY_BUFFER, _vertexBuffer.position);
-        gl.bufferData(gl.ARRAY_BUFFER, _vertexBuffer.positionV, gl.DYNAMIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, _vertexBuffer.position)
+        gl.bufferSubData(gl.ARRAY_BUFFER, 0, _vertexBuffer.positionV)
     
-        gl.bindBuffer(gl.ARRAY_BUFFER, _vertexBuffer.color);
-        gl.bufferData(gl.ARRAY_BUFFER, _vertexBuffer.colorV, gl.DYNAMIC_DRAW);
-    
-        gl.bindBuffer(gl.ARRAY_BUFFER, _vertexBuffer.texCoord);
-        gl.bufferData(gl.ARRAY_BUFFER, _vertexBuffer.texCoordV, gl.DYNAMIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, _vertexBuffer.color)
+        gl.bufferSubData(gl.ARRAY_BUFFER, 0, _vertexBuffer.colorV);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, _vertexBuffer.texCoord)
+        gl.bufferSubData(gl.ARRAY_BUFFER, 0, _vertexBuffer.texCoordV);
 
         gl.drawArrays(gl.TRIANGLES, 0, _vertexCount)
     }

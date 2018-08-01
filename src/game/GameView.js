@@ -237,7 +237,6 @@ module.exports = class GameView extends SpriteNode
         // Global anim helper
         this.anim += dt
 
-        // Sort spritenodes
         this._spriteNodes.sort((a, b) => a.getDrawOrder() - b.getDrawOrder())
 
         // Update mouse clicking stuff
@@ -300,8 +299,10 @@ module.exports = class GameView extends SpriteNode
         Renderer.beginFrame();
         
         // Render sprites
-        this._spriteNodes.forEach(spriteNode =>
+        for (let i = 0; i < this._spriteNodes.length; ++i)
         {
+            let spriteNode = this._spriteNodes[i]
+
             // Render the sprite in its proper hover/down state
             if (spriteNode.isEnabled())
             {
@@ -329,7 +330,7 @@ module.exports = class GameView extends SpriteNode
             {
                 spriteNode.renderDisabled();
             }
-        })
+        }
 
         Renderer.endFrame();
     }
