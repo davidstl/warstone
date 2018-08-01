@@ -27,6 +27,10 @@ exports._sprite_numbers = [
     Sprite.makeSprite(35, 240, 3, 5)  // 9
 ];
 exports._sprite_font = [];
+for (let i = 0; i <= 'Z'.charCodeAt(0) - '!'.charCodeAt(0); ++i)
+{
+    exports._sprite_font.push(Sprite.makeSprite(1 + i * 4, 252, 3, 5));
+}
 exports._sprite_HP = Sprite.makeSprite(1, 246, 7, 5);
 
 // Cards
@@ -74,42 +78,26 @@ exports._sprite_healthIcon = Sprite.makeSprite(49, 233, 7, 6);
 exports._sprite_attackIcon = Sprite.makeSprite(57, 232, 7, 7);
 exports._sprite_x = Sprite.makeSprite(1, 208, 10, 10);
 
+// Cart art
 exports._sprite_cardArtMap = {};
 
-exports.initialize = function()
-{
-    generateFont()
-    loadCardArt()
-}
+exports._sprite_cardArtMap.Pebble = Sprite.makeSprite(389, 1, 40, 32); // Pebble
+exports._sprite_cardArtMap.Stone = Sprite.makeSprite(389, 34, 40, 32); // Stone
+exports._sprite_cardArtMap.Brick = Sprite.makeSprite(389, 67, 40, 32); // Brick
+exports._sprite_cardArtMap.Boulder = Sprite.makeSprite(389, 100, 40, 32); // Boulder
+exports._sprite_cardArtMap.Mountain = Sprite.makeSprite(389, 133, 40, 32); // Mountain
+exports._sprite_cardArtMap.Planet = Sprite.makeSprite(389, 166, 40, 32); // Planet
 
-function generateFont()
-{
-    for (let i = 0; i <= 'Z'.charCodeAt(0) - '!'.charCodeAt(0); ++i)
-    {
-        exports._sprite_font.push(Sprite.makeSprite(1 + i * 4, 252, 3, 5));
-    }
-}
+exports._sprite_cardArtMap.Note = Sprite.makeSprite(430, 1, 40, 32); // Note
+exports._sprite_cardArtMap.Card = Sprite.makeSprite(430, 34, 40, 32); // Card
+exports._sprite_cardArtMap.Letter = Sprite.makeSprite(430, 67, 40, 32); // Letter
+exports._sprite_cardArtMap.Tome = Sprite.makeSprite(430, 100, 40, 32); // Tome
+exports._sprite_cardArtMap.Bookshelf = Sprite.makeSprite(430, 133, 40, 32); // Bookshelf
+exports._sprite_cardArtMap.Library = Sprite.makeSprite(430, 166, 40, 32); // Library
 
-function loadCardArt()
-{
-    exports._sprite_cardArtMap.Pebble = Sprite.makeSprite(389, 1, 40, 32); // Pebble
-    exports._sprite_cardArtMap.Stone = Sprite.makeSprite(389, 34, 40, 32); // Stone
-    exports._sprite_cardArtMap.Brick = Sprite.makeSprite(389, 67, 40, 32); // Brick
-    exports._sprite_cardArtMap.Boulder = Sprite.makeSprite(389, 100, 40, 32); // Boulder
-    exports._sprite_cardArtMap.Mountain = Sprite.makeSprite(389, 133, 40, 32); // Mountain
-    exports._sprite_cardArtMap.Planet = Sprite.makeSprite(389, 166, 40, 32); // Planet
-
-    exports._sprite_cardArtMap.Note = Sprite.makeSprite(430, 1, 40, 32); // Note
-    exports._sprite_cardArtMap.Card = Sprite.makeSprite(430, 34, 40, 32); // Card
-    exports._sprite_cardArtMap.Letter = Sprite.makeSprite(430, 67, 40, 32); // Letter
-    exports._sprite_cardArtMap.Tome = Sprite.makeSprite(430, 100, 40, 32); // Tome
-    exports._sprite_cardArtMap.Bookshelf = Sprite.makeSprite(430, 133, 40, 32); // Bookshelf
-    exports._sprite_cardArtMap.Library = Sprite.makeSprite(430, 166, 40, 32); // Library
-
-    exports._sprite_cardArtMap.Pin = Sprite.makeSprite(471, 1, 40, 32); // Pin
-    exports._sprite_cardArtMap.Scissors = Sprite.makeSprite(471, 34, 40, 32); // Scissors
-    exports._sprite_cardArtMap.Razor = Sprite.makeSprite(471, 67, 40, 32); // Razor
-    exports._sprite_cardArtMap.Machete = Sprite.makeSprite(471, 100, 40, 32); // Machete
-    exports._sprite_cardArtMap.Zweihander = Sprite.makeSprite(471, 133, 40, 32); // Zweihander
-    exports._sprite_cardArtMap.Guillotine = Sprite.makeSprite(471, 166, 40, 32); // Guillotine
-}
+exports._sprite_cardArtMap.Pin = Sprite.makeSprite(471, 1, 40, 32); // Pin
+exports._sprite_cardArtMap.Scissors = Sprite.makeSprite(471, 34, 40, 32); // Scissors
+exports._sprite_cardArtMap.Razor = Sprite.makeSprite(471, 67, 40, 32); // Razor
+exports._sprite_cardArtMap.Machete = Sprite.makeSprite(471, 100, 40, 32); // Machete
+exports._sprite_cardArtMap.Zweihander = Sprite.makeSprite(471, 133, 40, 32); // Zweihander
+exports._sprite_cardArtMap.Guillotine = Sprite.makeSprite(471, 166, 40, 32); // Guillotine

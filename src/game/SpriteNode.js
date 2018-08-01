@@ -1,6 +1,6 @@
 let Sprite = require('./Sprite')
 
-exports.SpriteNode = class
+module.exports = class SpriteNode
 {
     constructor(sprite, position, drawOrder, dimension, padding)
     {

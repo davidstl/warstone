@@ -1,9 +1,9 @@
 let Constants = require('./Constants')
 let Resources = require('./Resources')
 let Sprite = require('./Sprite')
-let SpriteNode = require('./SpriteNode').SpriteNode
+let SpriteNode = require('./SpriteNode')
 
-exports.EndTurnButton = class extends SpriteNode
+module.exports = class EndTurnButton extends SpriteNode
 {
     constructor()
     {
