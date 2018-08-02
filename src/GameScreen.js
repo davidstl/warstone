@@ -13,6 +13,8 @@ let DrawButton = require("./game/DrawButton")
 let Dialog = require("./game/Dialog")
 let DescriptionDialog = require("./game/DescriptionDialog")
 let Card = require("./game/Card")
+let SpriteNode = require("./game/SpriteNode")
+let Resources = require("./game/Resources")
 
 let FRAME_RATE = 60
 
@@ -349,11 +351,19 @@ class GameScreen extends Component
         this._gameView = new GameView()
         this._gameView.onClicked = this.onBGClicked.bind(this)
 
+        // Decks sprites on the left
+        for (let i = 0; i < 3; ++i)
+        {
+            this._gameView.addSpriteNode(new SpriteNode(Resources._sprite_redCardBack, {x:Constants.TOP_DECK_POS.x - i * 4, y:Constants.TOP_DECK_POS.y - i * 3}, Constants.DRAW_ORDER_DECK + i))
+            this._gameView.addSpriteNode(new SpriteNode(Resources._sprite_blueCardBack, {x:Constants.BOTTOM_DECK_POS.x - i * 4, y:Constants.BOTTOM_DECK_POS.y - i * 3}, Constants.DRAW_ORDER_DECK + i))
+        }
+
         // Advance button on the right
         this._endTurnBtn = new EndTurnButton()
         this._endTurnBtn.onClicked = this.endMyTurn.bind(this)
         this._gameView.addSpriteNode(this._endTurnBtn)
         
+        // Draw button on the left, on top of the deck
         this._drawButton = new DrawButton(this._gameView, this, this._config)
         this._dialog = new Dialog(this._gameView, this)
         this._descriptionDialog = new DescriptionDialog(this._gameView)

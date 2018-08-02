@@ -16,13 +16,6 @@ module.exports = class GameState
         // Create uninitialized players
         this._player1 = new Player(!this._gameView.isInverted(), this._gameView, game, config)
         this._player2 = new Player(this._gameView.isInverted(), this._gameView, game, config)
-
-        // Desks sprites on the left (Why is this even there? The gamescreen should add those)
-        for (let i = 0; i < 3; ++i)
-        {
-            this._gameView.addSpriteNode(new SpriteNode(Resources._sprite_redCardBack, {x:Constants.TOP_DECK_POS.x - i * 4, y:Constants.TOP_DECK_POS.y - i * 3}, Constants.DRAW_ORDER_DECK + i))
-            this._gameView.addSpriteNode(new SpriteNode(Resources._sprite_blueCardBack, {x:Constants.BOTTOM_DECK_POS.x - i * 4, y:Constants.BOTTOM_DECK_POS.y - i * 3}, Constants.DRAW_ORDER_DECK + i))
-        }
     }
 
     getPlayer1()

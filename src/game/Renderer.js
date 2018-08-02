@@ -1,7 +1,7 @@
 let Constants = require('./Constants')
 let mat4 = require('gl-matrix/src/gl-matrix/mat4')
 
-let MAX_SPRITE_COUNT = 300
+let MAX_SPRITE_COUNT = 100
 
 let gl = null
 

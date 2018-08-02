@@ -99,7 +99,7 @@ module.exports = class Player extends SpriteNode
 
     getEnergyCap()
     {
-        this._energyCap
+        return this._energyCap
     }
 
     setEnergyCap(energyCap)

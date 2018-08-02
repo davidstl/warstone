@@ -237,7 +237,13 @@ module.exports = class GameView extends SpriteNode
         // Global anim helper
         this.anim += dt
 
-        this._spriteNodes.sort((a, b) => a.getDrawOrder() - b.getDrawOrder())
+        this._spriteNodes.forEach((spriteNode, idx) => spriteNode.index = idx)
+        this._spriteNodes.sort((a, b) =>
+        {
+            if (a.getDrawOrder() < b.getDrawOrder()) return -1
+            if (a.getDrawOrder() > b.getDrawOrder()) return 1
+            return a.index - b.index
+        })
 
         // Update mouse clicking stuff
         let lastHoverSpriteNode = this._hoverSpriteNode;

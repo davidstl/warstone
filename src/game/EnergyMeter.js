@@ -33,28 +33,28 @@ module.exports = class EnergyMeter extends SpriteNode
         }
         else
         {
-            pos = {x:271, y:218};
+            pos = {x:271, y:218}
         }
 
         Sprite.renderPos(Resources._sprite_energyBg, pos)
         Sprite.renderPosDim(Resources._sprite_energy, 
             {x:pos.x + 10, y:pos.y + 4}, 
-            {x:Math.floor(Resources._sprite_energy.width * percent), y:Resources._sprite_energy.height});
+            {x:Math.floor(Resources._sprite_energy.width * percent), y:Resources._sprite_energy.height})
     
         if (this._isTopPlayer)
         {
-            pos.x += 13;
-            pos.y += -3;
+            pos.x += 13
+            pos.y += -3
         }
         else
         {
-            pos.x += 13;
-            pos.y += 12;
+            pos.x += 13
+            pos.y += 12
         }
 
         pos.x = this._gameView.drawNumbers(pos, this._energy, Constants.ENERGY_COLOR) + 1;
         Sprite.renderPos(Resources._sprite_energySlash, pos)
-        pos.x += 5;
-        this._gameView.drawNumbers(pos, this._energyCap, Constants.ENERGY_COLOR);
+        pos.x += 5
+        this._gameView.drawNumbers(pos, this._energyCap, Constants.ENERGY_COLOR)
     }
 }

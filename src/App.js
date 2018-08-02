@@ -140,14 +140,16 @@ class App extends Component
             }
             else
             {
-                this.setState({screen: "mainMenu", joiningState: ""})
+                this.onGameScreenClose()
             }
         }
     }
 
     onGameScreenClose()
     {
-        this.setState({screen: "mainMenu", joiningState: ""})
+        let state = this.makeDefaultState()
+        state.screen = "mainMenu"
+        this.setState(state)
     }
 
     render()
