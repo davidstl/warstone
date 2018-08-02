@@ -6,9 +6,8 @@ import MainMenuScreen from './MainMenuScreen';
 import GameScreen from './GameScreen';
 let brainCloud = require("braincloud-react")
 
-let appId = "22819"
-let appSecret = "eeeb827e-4e07-42cd-b09b-ffeab6d9cd09"
-let bcURL = "https://internal.braincloudservers.com/"
+let appId = "" // FILL ME
+let appSecret = "" // FILL ME
 
 class App extends Component
 {
@@ -52,7 +51,6 @@ class App extends Component
     {
         this.bc = new brainCloud.BrainCloudWrapper("warstone")
         this.bc.initialize(appId, appSecret, "1.0.0", bcURL)
-        this.bc.brainCloudClient.setServerUrl(bcURL)
         this.bc.brainCloudClient.enableLogging(true);
     }
 
