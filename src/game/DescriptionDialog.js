@@ -1,7 +1,6 @@
 let Constants = require('./Constants')
 let Resources = require('./Resources')
 let SpriteNode = require('./SpriteNode')
-let Sprite = require('./Sprite')
 
 module.exports = class DescriptionDialog extends SpriteNode
 {

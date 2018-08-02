@@ -116,7 +116,10 @@ class App extends Component
             })
         }, () =>
         {
-            this.dieWithMessage("Failed to enable RTT")
+            if (this.state.screen === "lookingForOpponent")
+            {
+                this.dieWithMessage("Failed to enable RTT")
+            }
         })
     }
 
@@ -147,9 +150,15 @@ class App extends Component
 
     onGameScreenClose()
     {
-        let state = this.makeDefaultState()
-        state.screen = "mainMenu"
-        this.setState(state)
+        this.bc.brainCloudClient.deregisterAllRTTCallbacks()
+        this.bc.brainCloudClient.disableRTT()
+
+        this.setState({
+            screen: "mainMenu",
+            joiningState: "",
+            lobby: null,
+            server: null
+        })
     }
 
     render()
@@ -164,7 +173,6 @@ class App extends Component
                         <LoginScreen onLogin={this.onLoginClicked.bind(this)} />
                     </div>
                 )
-                break
             }
             case "loginIn":
             {
@@ -174,7 +182,6 @@ class App extends Component
                         <LoadingScreen text="Login in..."/>
                     </div>
                 )
-                break
             }
             case "mainMenu":
             {
@@ -185,7 +192,6 @@ class App extends Component
                                         onPlay={this.onPlayClicked.bind(this)}/>
                     </div>
                 )
-                break
             }
             case "lookingForOpponent":
             {
@@ -193,9 +199,14 @@ class App extends Component
                     <div className="App">
                         {this.renderTitle()}
                         <LoadingScreen text={`Looking for Opponent... ${this.state.joiningState}`}/>
+                        <div>
+                            Lobby:
+                            <ul>
+                                {(this.state.lobby ? (this.state.lobby.members.map(member => (<li>{member.team + ": " + member.name}</li>))) : (""))}
+                            </ul>
+                        </div>
                     </div>
                 )
-                break
             }
             case "game":
             {
@@ -208,7 +219,6 @@ class App extends Component
                                     onClose={this.onGameScreenClose.bind(this)} />
                     </div>
                 )
-                break
             }
             default:
             {
@@ -218,7 +228,6 @@ class App extends Component
                         Invalid state
                     </div>
                 )
-                break;
             }
         }
     }

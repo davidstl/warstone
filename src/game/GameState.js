@@ -1,7 +1,4 @@
-let Constants = require('./Constants')
 let Player = require('./Player')
-let Resources = require('./Resources')
-let SpriteNode = require('./SpriteNode')
 
 module.exports = class GameState
 {
@@ -50,7 +47,7 @@ module.exports = class GameState
     // Get opponent player of "player"
     getOtherPlayer(player)
     {
-        return this._player1 == player ? this._player2 : this._player1
+        return this._player1 === player ? this._player2 : this._player1
     }
 
     // Deserialize server's game state. This will override all current states

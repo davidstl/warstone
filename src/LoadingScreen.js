@@ -5,11 +5,6 @@ import './LoadingScreen.css'
 //  text
 class LoadingScreen extends Component
 {
-    constructor()
-    {
-        super()
-    }
-
     render()
     {
         return (

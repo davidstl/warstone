@@ -4,11 +4,6 @@ import './LoginScreen.css'
 // onLogin(user, pass)
 class LoginScreen extends Component
 {
-    constructor()
-    {
-        super()
-    }
-
     onLogin(e)
     {
         if (this.refs.username.value === '')

@@ -335,7 +335,7 @@ module.exports = class Card extends SpriteNode
             pos.y += Resources._sprite_taunt.height + 1
         }
         if (this._showNoSleepBuff || 
-           ((this._state === Constants.CardState.IN_HAND || this._state === Constants.CardState.MOVING_TO_HAND)) && this._type.SleepOnStartTurns === 0)
+           (((this._state === Constants.CardState.IN_HAND || this._state === Constants.CardState.MOVING_TO_HAND)) && this._type.SleepOnStartTurns === 0))
         {
             Sprite.renderPos(Resources._sprite_nosleep, pos)
             pos.y += Resources._sprite_nosleep.height + 1
@@ -459,7 +459,7 @@ module.exports = class Card extends SpriteNode
                 {
                     this.setDrawOrder(Constants.DRAW_ORDER_BOARD)
                     this._state = Constants.CardState.ON_BOARD
-                    if (!this._isTopPlayer && this._game._state != Constants.GameState.OPPONENT_TURN)
+                    if (!this._isTopPlayer && this._game._state !== Constants.GameState.OPPONENT_TURN)
                     {
                         this.setEnabled(true)
                     }
@@ -500,7 +500,7 @@ module.exports = class Card extends SpriteNode
                     this.damage(Math.floor(this._targetCard.getType().Attack * defenderMultiplier))
             
                     // Destroy card
-                    if (this._targetCard.getHP() == 0)
+                    if (this._targetCard.getHP() === 0)
                     {
                         this._targetCard.discard(0.0)
                     }
@@ -523,13 +523,15 @@ module.exports = class Card extends SpriteNode
                 {
                     this.setDrawOrder(Constants.DRAW_ORDER_BOARD)
                     this._state = Constants.CardState.ON_BOARD
-                    if (this.getHP() == 0)
+                    if (this.getHP() === 0)
                     {
                         this.discard(0.0)
                     }
                 }
                 break
             }
+            default:
+                break
         }
     }
 
@@ -574,10 +576,10 @@ module.exports = class Card extends SpriteNode
                     return Resources._sprite_paperCard
                 case "SCISSORS":
                     return Resources._sprite_scissorsCard
+                default:
+                    return null
             }
         }
-        
-        return null
     }
 
     getCardHoverColor()
@@ -603,9 +605,9 @@ module.exports = class Card extends SpriteNode
                 return Resources._sprite_paperHoverCard
             case "SCISSORS":
                 return Resources._sprite_scissorsHoverCard
+            default:
+                return Resources._sprite_hoverCard
         }
-        
-        return Resources._sprite_hoverCard
     }
 
     getTextColor()
@@ -791,7 +793,7 @@ module.exports = class Card extends SpriteNode
         for (let i = 0; i < this._hand.length; ++i)
         {
             let card = this._hand[i]
-            if (card == this) return i
+            if (card === this) return i
         }
         return -1 // Not supposed to happen
     }
@@ -802,7 +804,7 @@ module.exports = class Card extends SpriteNode
         for (let i = 0; i < this._board.length; ++i)
         {
             let card = this._board[i]
-            if (card == this) return i
+            if (card === this) return i
         }
         return -1 // Not supposed to happen
     }

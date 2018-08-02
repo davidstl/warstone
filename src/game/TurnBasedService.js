@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 if (typeof WebSocket === 'undefined')
 {
     var WebSocket = require('isomorphic-ws');
@@ -22,13 +23,13 @@ module.exports = class TurnBasedService
         this._onDefeatCallback = onDefeatCallback
         this._onCloseCallback = onCloseCallback
 
-        var uri = "ws://" + server.url + ":" + server.wsPort;
-        this._socket = new WebSocket(uri);
+        var uri = "ws://" + server.url + ":" + server.wsPort
+        this._socket = new WebSocket(uri)
         
-        this._socket.addEventListener('error', this.onSocketError.bind(this));
-        this._socket.addEventListener('close', this.onSocketClosed.bind(this));
-        this._socket.addEventListener('open', this.onSocketOpen.bind(this));
-        this._socket.addEventListener('message', this.onSocketMessage.bind(this));
+        this._socket.addEventListener('error', this.onSocketError.bind(this))
+        this._socket.addEventListener('close', this.onSocketClosed.bind(this))
+        this._socket.addEventListener('open', this.onSocketOpen.bind(this))
+        this._socket.addEventListener('message', this.onSocketMessage.bind(this))
     }
 
     onSocketError(e)
@@ -120,8 +121,8 @@ module.exports = class TurnBasedService
                 }
                 break
             }
+            default:
+                return true
         }
-
-        return true
     }
 }

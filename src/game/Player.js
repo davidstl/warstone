@@ -224,7 +224,7 @@ module.exports = class Player extends SpriteNode
                 let card = this._hand[i]
                 let screenPos = card.handIndexToScreen(i, this._hand.length)
                 let diff = this._isTopPlayer ? (Constants.TOP_HAND_POS.y - screenPos.y) : (screenPos.y - Constants.BOTTOM_HAND_POS.y)
-                if (card == hovered)
+                if (card === hovered)
                 {
                     offsetAmount = 20.0 // Will shift following cards in hand
                     card.setHandOffset({x:0, y:-21 - diff}) // Move our card up for better visibility
@@ -239,7 +239,7 @@ module.exports = class Player extends SpriteNode
         for (let i = 0; i < this._hand.length; ++i)
         {
             let card = this._hand[i]
-            if (!this._isTopPlayer && card == this._gameView.getHovered())
+            if (!this._isTopPlayer && card === this._gameView.getHovered())
             {
                 card.setDrawOrder(Constants.DRAW_ORDER_BOTTOM_HAND + this._hand.length + 1);
             }

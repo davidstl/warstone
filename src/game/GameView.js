@@ -64,7 +64,7 @@ module.exports = class GameView extends SpriteNode
             {
                 Sprite.renderPosColor(Resources._sprite_numbers[digit], pos, color)
             }
-            if (digit == 1) pos.x += 2
+            if (digit === 1) pos.x += 2
             else pos.x += 4
         }
 
@@ -273,7 +273,7 @@ module.exports = class GameView extends SpriteNode
         {
             if (this._downSpriteNode != null)
             {
-                if (this._downSpriteNode == this._hoverSpriteNode && this._hoverSpriteNode.isEnabled())
+                if (this._downSpriteNode === this._hoverSpriteNode && this._hoverSpriteNode.isEnabled())
                 {
                     clicked = this._downSpriteNode;
                 }
@@ -282,7 +282,7 @@ module.exports = class GameView extends SpriteNode
         }
 
         // Events
-        if (lastHoverSpriteNode != this._hoverSpriteNode && this._hoverSpriteNode != null && this._hoverSpriteNode.isEnabled())
+        if (lastHoverSpriteNode !== this._hoverSpriteNode && this._hoverSpriteNode != null && this._hoverSpriteNode.isEnabled())
         {
             if (this._hoverSpriteNode.onHovered)
             {
@@ -312,9 +312,9 @@ module.exports = class GameView extends SpriteNode
             // Render the sprite in its proper hover/down state
             if (spriteNode.isEnabled())
             {
-                if (spriteNode == this._hoverSpriteNode && this._hoverSpriteNode.isEnabled())
+                if (spriteNode === this._hoverSpriteNode && this._hoverSpriteNode.isEnabled())
                 {
-                    if (spriteNode == this._downSpriteNode)
+                    if (spriteNode === this._downSpriteNode)
                     {
                         spriteNode.renderDown();
                     }
@@ -323,7 +323,7 @@ module.exports = class GameView extends SpriteNode
                         spriteNode.renderHover();
                     }
                 }
-                else if (spriteNode == this._downSpriteNode)
+                else if (spriteNode === this._downSpriteNode)
                 {
                     spriteNode.renderHover();
                 }

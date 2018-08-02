@@ -6,11 +6,6 @@ import './MainMenuScreen.css'
 //  onPlay
 class MainMenuScreen extends Component
 {
-    constructor()
-    {
-        super()
-    }
-
     onPlay()
     {
         this.props.onPlay()

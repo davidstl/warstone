@@ -89,7 +89,7 @@ class GameScreen extends Component
             {
                 // Draw initial cards
                 this.drawInitialCards()
-                let that = this
+
                 // This is called from the service thread, so we can sleep here before starting the game and drawing the first card
                 setTimeout(this.handleTurnTransition.bind(this, gameStateJson), 250 * 3 + 500)
             }
@@ -151,11 +151,11 @@ class GameScreen extends Component
             this._gameView.update(dt)
         }
 
-        if (this._state != Constants.GameState.IDLE)
+        if (this._state !== Constants.GameState.IDLE)
         {
             this._turnTimer = Math.max(this._turnTimer - dt, 0.0)
             this._gameView.updateRibbon(this._turnTimer / 60.0)
-            if (this._turnTimer == 0.0 && this._state !== Constants.GameState.OPPONENT_TURN)
+            if (this._turnTimer === 0.0 && this._state !== Constants.GameState.OPPONENT_TURN)
             {
                 this.endMyTurn()
             }
@@ -226,7 +226,7 @@ class GameScreen extends Component
     onPlayerClicked(clickedPlayer)
     {
         if (this._state !== Constants.GameState.ATTACKING) return;
-        if (clickedPlayer != this._opponentPlayer) return;
+        if (clickedPlayer !== this._opponentPlayer) return;
         if (!this._attackingCard) return;
 
         // Battle
@@ -245,7 +245,7 @@ class GameScreen extends Component
         for (let i = 0; i < hand.length; ++i)
         {
             let card = hand[i]
-            if (card == clickedCard)
+            if (card === clickedCard)
             {
                 // Cancel the attacking card
                 this.setState(Constants.GameState.PICKING)
@@ -282,9 +282,9 @@ class GameScreen extends Component
         for (let i = 0; i < board.length; ++i)
         {
             let card = board[i]
-            if (card == clickedCard)
+            if (card === clickedCard)
             {
-                if (card == this._attackingCard)
+                if (card === this._attackingCard)
                 {
                     this.setState(Constants.GameState.PICKING) // Cancel attack state
                 }
@@ -298,13 +298,13 @@ class GameScreen extends Component
         }
 
         // Are we attacking an enemy card?
-        if (this._state == Constants.GameState.ATTACKING && this._attackingCard != null)
+        if (this._state === Constants.GameState.ATTACKING && this._attackingCard != null)
         {
             board = this._opponentPlayer.getBoard()
             for (let i = 0; i < board.length; ++i)
             {
                 let card = board[i]
-                if (card == clickedCard)
+                if (card === clickedCard)
                 {
                     // Battle
                     this.attackCard(this._myPlayer, this._attackingCard, card)
@@ -333,7 +333,7 @@ class GameScreen extends Component
             this._gameState = new GameState(this._gameView, this, this._config)
             this._gameState.deserialize(gameStateJson, this._config)
             this._myPlayer = this._gameState.getPlayer(this.props.user.id)
-            this._opponentPlayer = this._gameState.getPlayer1() == this._myPlayer ? this._gameState.getPlayer2() : this._gameState.getPlayer1()
+            this._opponentPlayer = (this._gameState.getPlayer1() === this._myPlayer) ? this._gameState.getPlayer2() : this._gameState.getPlayer1()
         }
         this._gameState.deserializeDecks(gameStateJson);
 
@@ -510,7 +510,7 @@ class GameScreen extends Component
         }
         this._cardDrawed++;
 
-        if (player == this._myPlayer)
+        if (player === this._myPlayer)
         {
             this.submitAction({
                 action: "draw",
@@ -528,7 +528,7 @@ class GameScreen extends Component
         if (!player.getHand().includes(card)) player.getHand().push(card) // Make sure it's in the hand
         card.moveFromHandToBoard(0.0)
 
-        if (player == this._myPlayer)
+        if (player === this._myPlayer)
         {
             this.submitAction({
                 action: "place",
@@ -542,7 +542,7 @@ class GameScreen extends Component
         // Battle!
         attacker.attackCard(defender, 0.0)
 
-        if (player == this._myPlayer)
+        if (player === this._myPlayer)
         {
             this.submitAction({
                 action: "attack",
@@ -556,7 +556,7 @@ class GameScreen extends Component
     {
         attacker.attackPlayer(defender, 0.0)
 
-        if (player == this._myPlayer)
+        if (player === this._myPlayer)
         {
             this.submitAction({
                 action: "attackPlayer",
@@ -572,7 +572,7 @@ class GameScreen extends Component
         card.moveFromHandToSpell(0)
         this._spellCard = card
 
-        if (player == this._myPlayer)
+        if (player === this._myPlayer)
         {
             this.submitAction({
                 action: "spell",
@@ -593,7 +593,7 @@ class GameScreen extends Component
         this._cardDrawed = 0
         this._turnTimer = 60.0
 
-        if (player == this._myPlayer)
+        if (player === this._myPlayer)
         {
             this.startMyTurn()
         }
