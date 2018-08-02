@@ -199,12 +199,16 @@ class App extends Component
                     <div className="App">
                         {this.renderTitle()}
                         <LoadingScreen text={`Looking for Opponent... ${this.state.joiningState}`}/>
-                        <div>
-                            Lobby:
-                            <ul>
-                                {(this.state.lobby ? (this.state.lobby.members.map(member => (<li>{member.team + ": " + member.name}</li>))) : (""))}
-                            </ul>
-                        </div>
+                        {
+                            this.state.lobby ? (
+                                <div style={{margin: "0 auto"}}>
+                                    <p>Lobby: {this.state.lobby.id}</p>
+                                    <ul>
+                                        {(this.state.lobby ? (this.state.lobby.members.map(member => (<li>{member.team + ": " + member.name}</li>))) : (""))}
+                                    </ul>
+                                </div>
+                            ) : ""
+                        }
                     </div>
                 )
             }

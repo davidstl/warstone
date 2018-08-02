@@ -151,7 +151,7 @@ class GameScreen extends Component
             this._gameView.update(dt)
         }
 
-        if (this._state !== Constants.GameState.IDLE)
+        if (this._state !== Constants.GameState.IDLE && !this._gameEnded /* // Magic bools! */)
         {
             this._turnTimer = Math.max(this._turnTimer - dt, 0.0)
             this._gameView.updateRibbon(this._turnTimer / 60.0)

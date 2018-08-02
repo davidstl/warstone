@@ -34,11 +34,13 @@ module.exports = class TurnBasedService
 
     onSocketError(e)
     {
+        if (!this._socket) return;
         if (this._onCloseCallback) this._onCloseCallback({}, "Connection failed")
     }
 
     onSocketClosed(e)
     {
+        if (!this._socket) return;
         if (this._onCloseCallback) this._onCloseCallback({}, "Connection closed")
     }
 
@@ -68,6 +70,8 @@ module.exports = class TurnBasedService
 
     onSocketMessage(e)
     {
+        if (!this._socket) return;
+
         let msg = JSON.parse(e.data);
         console.log("RS RECV: " + e.data)
         if (!this.onRecv(msg.event, msg))
@@ -102,14 +106,12 @@ module.exports = class TurnBasedService
                     }
                     else
                     {
-                        let winnerIds = winners.map(winner => winner.id)
-                        let that = this
-                        if (winnerIds.find(id => id === that._profileId))
+                        if (winners.find(id => id === this._profileId))
                         {
-                            this._onVictoryCallback(jsonResponse.data, winnerIds)
+                            this._onVictoryCallback(jsonResponse.data, winners)
                             return false
                         }
-                        this._onDefeatCallback(jsonResponse.data, winnerIds)
+                        this._onDefeatCallback(jsonResponse.data, winners)
                         return false
                     }
                 }
@@ -122,7 +124,9 @@ module.exports = class TurnBasedService
                 break
             }
             default:
-                return true
+                break
         }
+
+        return true
     }
 }
