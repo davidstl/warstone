@@ -6,7 +6,7 @@ class LoginScreen extends Component
 {
     onLogin(e)
     {
-        if (this.refs.username.value === '')
+        if (this.refs.username.value.trim() === '')
         {
             alert('Username is required');
         }
@@ -16,7 +16,7 @@ class LoginScreen extends Component
         }
         else
         {
-            this.props.onLogin(this.refs.username.value, this.refs.password.value);
+            this.props.onLogin(this.refs.username.value.trim(), this.refs.password.value);
         }
         
         e.preventDefault();

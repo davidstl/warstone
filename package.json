@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "braincloud-react": "^3.8.0",
-    "gl-matrix": "^2.7.1",
     "isomorphic-ws": "^4.0.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

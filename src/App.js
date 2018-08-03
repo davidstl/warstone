@@ -50,7 +50,7 @@ class App extends Component
     initBC()
     {
         this.bc = new brainCloud.BrainCloudWrapper("warstone")
-        this.bc.initialize(appId, appSecret, "1.0.0", bcURL)
+        this.bc.initialize(appId, appSecret, "1.0.0")
         this.bc.brainCloudClient.enableLogging(true);
     }
 
@@ -67,6 +67,7 @@ class App extends Component
 
         // Connect to braincloud
         console.log("BC: authenticateUniversal")
+        this.username = user
         this.bc.authenticateUniversal(user, pass, true, this.onLoggedIn.bind(this))
     }
 
@@ -80,10 +81,11 @@ class App extends Component
                 screen: "mainMenu",
                 user: {
                     id: result.data.profileId,
-                    name: result.data.playerName,
+                    name: this.username,
                     pic: result.data.pictureUrl
                 }
             })
+            this.bc.playerState.updateUserName(this.username, result => {})
         }
         else
         {

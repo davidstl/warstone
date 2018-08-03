@@ -1,0 +1,539 @@
+{
+  "abilities" : [ {
+    "entityIndexedId" : "config",
+    "timeToLive" : null,
+    "createdAt" : 1518797288931,
+    "data" : {
+      "Skip" : {
+        "Name" : "Skip",
+        "Description" : "After your turn ends, take another turn"
+      },
+      "Draw1" : {
+        "Name" : "Draw",
+        "Description" : "Draw a card"
+      },
+      "Barrier1" : {
+        "Name" : "Barrier",
+        "Description" : "Place a barrier anywhere. Prevents unit's advance for 1 turn",
+        "Duration" : 1
+      },
+      "Freeze1" : {
+        "Name" : "Short Freeze",
+        "Description" : "Freeze any card. Prevents from moving or advancing for 1 turn",
+        "Duration" : 1
+      },
+      "Freeze2" : {
+        "Name" : "Long Freeze",
+        "Description" : "Freeze any card. Prevents from moving or advancing for 2 turns",
+        "Duration" : 2
+      }
+    },
+    "entityType" : "abilities",
+    "appId" : "22819",
+    "entityId" : "2842cc43-977d-44b7-a292-672b837ef3b3",
+    "acl" : {
+      "other" : 1
+    },
+    "ownerId" : null,
+    "version" : 7,
+    "expiresAt" : 9223372036854775807,
+    "updatedAt" : 1519220643950
+  } ],
+  "cards" : [ {
+    "entityIndexedId" : "config",
+    "timeToLive" : null,
+    "createdAt" : 1518797248681,
+    "data" : {
+      "Rock5" : {
+        "isSpell" : false,
+        "Name" : "Pebble",
+        "Art" : "Pebble",
+        "Description" : "2x vs Sharp. \nTaunt",
+        "Suit" : "ROCK",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : true,
+        "Freezing" : 0,
+        "Cost" : 1,
+        "HP" : 2,
+        "Attack" : 1,
+        "DeathRattle" : ""
+      },
+      "Rock7" : {
+        "isSpell" : false,
+        "Name" : "Stone",
+        "Art" : "Stone",
+        "Description" : "2x vs Sharp",
+        "Suit" : "ROCK",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 3,
+        "HP" : 4,
+        "Attack" : 2,
+        "DeathRattle" : ""
+      },
+      "Rock9" : {
+        "isSpell" : false,
+        "Name" : "Brick",
+        "Art" : "Brick",
+        "Description" : "2x vs Sharp",
+        "Suit" : "ROCK",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 4,
+        "HP" : 6,
+        "Attack" : 3,
+        "DeathRattle" : ""
+      },
+      "Rock11" : {
+        "isSpell" : false,
+        "Name" : "Boulder",
+        "Art" : "Boulder",
+        "Description" : "2x vs Sharp",
+        "Suit" : "ROCK",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 5,
+        "HP" : 8,
+        "Attack" : 4,
+        "DeathRattle" : ""
+      },
+      "Rock13" : {
+        "isSpell" : false,
+        "Name" : "Mountain",
+        "Art" : "Mountain",
+        "Description" : "2x vs Sharp",
+        "Suit" : "ROCK",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 6,
+        "HP" : 10,
+        "Attack" : 5,
+        "DeathRattle" : ""
+      },
+      "Rock15" : {
+        "isSpell" : false,
+        "Name" : "Planet",
+        "Art" : "Planet",
+        "Description" : "2x vs Sharp",
+        "Suit" : "ROCK",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 7,
+        "HP" : 12,
+        "Attack" : 8,
+        "DeathRattle" : ""
+      },
+      "Paper5" : {
+        "isSpell" : false,
+        "Name" : "Note",
+        "Art" : "Note",
+        "Description" : "2x vs Stone. \nAttack on turn played",
+        "Suit" : "PAPER",
+        "SleepOnStartTurns" : 0,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 1,
+        "HP" : 1,
+        "Attack" : 1,
+        "DeathRattle" : ""
+      },
+      "Paper7" : {
+        "isSpell" : false,
+        "Name" : "Card",
+        "Art" : "Card",
+        "Description" : "2x vs Stone. \nAttack on turn played",
+        "Suit" : "PAPER",
+        "SleepOnStartTurns" : 0,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 2,
+        "HP" : 2,
+        "Attack" : 2,
+        "DeathRattle" : ""
+      },
+      "Paper9" : {
+        "isSpell" : false,
+        "Name" : "Letter",
+        "Art" : "Letter",
+        "Description" : "2x vs Stone. \nAttack on turn played",
+        "Suit" : "PAPER",
+        "SleepOnStartTurns" : 0,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 3,
+        "HP" : 3,
+        "Attack" : 3,
+        "DeathRattle" : ""
+      },
+      "Paper11" : {
+        "isSpell" : false,
+        "Name" : "Tome",
+        "Art" : "Tome",
+        "Description" : "2x vs Stone",
+        "Suit" : "PAPER",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : true,
+        "Freezing" : 0,
+        "Cost" : 4,
+        "HP" : 5,
+        "Attack" : 5,
+        "DeathRattle" : ""
+      },
+      "Paper13" : {
+        "isSpell" : false,
+        "Name" : "Bookshelf",
+        "Art" : "Bookshelf",
+        "Description" : "2x vs Stone",
+        "Suit" : "PAPER",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 5,
+        "HP" : 6,
+        "Attack" : 6,
+        "DeathRattle" : ""
+      },
+      "Paper15" : {
+        "isSpell" : false,
+        "Name" : "Library",
+        "Art" : "Library",
+        "Description" : "2x vs Stone",
+        "Suit" : "PAPER",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 7,
+        "HP" : 10,
+        "Attack" : 10,
+        "DeathRattle" : ""
+      },
+      "Scissors5" : {
+        "isSpell" : false,
+        "Name" : "Pin",
+        "Art" : "Pin",
+        "Description" : "2x vs Paper",
+        "Suit" : "SCISSORS",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 1,
+        "HP" : 1,
+        "Attack" : 2,
+        "DeathRattle" : ""
+      },
+      "Scissors7" : {
+        "isSpell" : false,
+        "Name" : "Scissors",
+        "Art" : "Scissors",
+        "Description" : "2x vs Paper",
+        "Suit" : "SCISSORS",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 2,
+        "HP" : 2,
+        "Attack" : 3,
+        "DeathRattle" : ""
+      },
+      "Scissors9" : {
+        "isSpell" : false,
+        "Name" : "Razor",
+        "Art" : "Razor",
+        "Description" : "2x vs Paper. \nTaunt",
+        "Suit" : "SCISSORS",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : true,
+        "Freezing" : 0,
+        "Cost" : 3,
+        "HP" : 3,
+        "Attack" : 5,
+        "DeathRattle" : ""
+      },
+      "Scissors11" : {
+        "isSpell" : false,
+        "Name" : "Machete",
+        "Art" : "Machete",
+        "Description" : "2x vs Paper",
+        "Suit" : "SCISSORS",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 4,
+        "HP" : 4,
+        "Attack" : 7,
+        "DeathRattle" : ""
+      },
+      "Scissors13" : {
+        "isSpell" : false,
+        "Name" : "Zweihander",
+        "Art" : "Zweihander",
+        "Description" : "2x vs Paper",
+        "Suit" : "SCISSORS",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 5,
+        "HP" : 5,
+        "Attack" : 9,
+        "DeathRattle" : ""
+      },
+      "Scissors15" : {
+        "isSpell" : false,
+        "Name" : "Guillotine",
+        "Art" : "Guillotine",
+        "Description" : "2x vs Paper",
+        "Suit" : "SCISSORS",
+        "SleepOnStartTurns" : 1,
+        "OnSpawn" : "",
+        "DivineShield" : false,
+        "Taunt" : false,
+        "Freezing" : 0,
+        "Cost" : 7,
+        "HP" : 7,
+        "Attack" : 14,
+        "DeathRattle" : ""
+      },
+      "SkipTurnSpell" : {
+        "isSpell" : true,
+        "Name" : "Skip",
+        "Description" : "After your turn ends, take another turn",
+        "Suit" : "Spell",
+        "Ability" : "Skip",
+        "Cost" : 10
+      },
+      "ShortFreeze" : {
+        "isSpell" : true,
+        "Name" : "Short Freeze",
+        "Description" : "Freeze any card",
+        "Suit" : "Spell",
+        "Ability" : "Freeze1",
+        "Cost" : 2
+      },
+      "LongFreeze" : {
+        "isSpell" : true,
+        "Name" : "Long Freeze",
+        "Description" : "Freeze any card for 2 turns",
+        "Suit" : "Spell",
+        "Ability" : "Freeze2",
+        "Cost" : 3
+      },
+      "AllDamage1" : {
+        "isSpell" : true,
+        "Name" : "Acid Spit",
+        "Description" : "1 Damage to each unit in play, including your own",
+        "Suit" : "Spell",
+        "Ability" : "AllDamage1",
+        "Cost" : 1
+      },
+      "AllDamage2" : {
+        "isSpell" : true,
+        "Name" : "Acid Rain",
+        "Description" : "2 Damage to each unit in play, including your own",
+        "Suit" : "Spell",
+        "Ability" : "AllDamage2",
+        "Cost" : 2
+      },
+      "AllDamage3" : {
+        "isSpell" : true,
+        "Name" : "Acid Storm",
+        "Description" : "3 Damage to each unit in play, including your own",
+        "Suit" : "Spell",
+        "Ability" : "AllDamage3",
+        "Cost" : 3
+      },
+      "Sweep1" : {
+        "isSpell" : true,
+        "Name" : "Claw Swipe",
+        "Description" : "1 Damage to each enemy unit",
+        "Suit" : "Spell",
+        "Ability" : "Sweep1",
+        "Cost" : 2
+      },
+      "Sweep2" : {
+        "isSpell" : true,
+        "Name" : "Claw Shred",
+        "Description" : "2 Damage to each enemy unit",
+        "Suit" : "Spell",
+        "Ability" : "Sweep2",
+        "Cost" : 4
+      },
+      "Sweep3" : {
+        "isSpell" : true,
+        "Name" : "Claw Fury",
+        "Description" : "3 Damage to each enemy unit",
+        "Suit" : "Spell",
+        "Ability" : "Sweep3",
+        "Cost" : 6
+      },
+      "BarrierSpell" : {
+        "isSpell" : true,
+        "Name" : "Divine Shield",
+        "Description" : "Place a Barrier Shield on any unit. Absorbs 1 hit.",
+        "Suit" : "Spell",
+        "Ability" : "Barrier1",
+        "Cost" : 2
+      }
+    },
+    "entityType" : "cards",
+    "appId" : "22819",
+    "entityId" : "f8f084bb-6dd9-432f-960c-76b2610267cc",
+    "acl" : {
+      "other" : 1
+    },
+    "ownerId" : null,
+    "version" : 23,
+    "expiresAt" : 9223372036854775807,
+    "updatedAt" : 1519945858527
+  } ],
+  "decks" : [ {
+    "entityIndexedId" : "config",
+    "timeToLive" : null,
+    "createdAt" : 1518797268594,
+    "data" : {
+      "Deck1" : {
+        "Name" : "Standard",
+        "Description" : "",
+        "PlayerHPBonus" : 0,
+        "Deck" : {
+          "Rock5" : 2,
+          "Rock7" : 2,
+          "Rock9" : 2,
+          "Rock11" : 2,
+          "Rock13" : 2,
+          "Rock15" : 2,
+          "Paper5" : 2,
+          "Paper7" : 2,
+          "Paper9" : 2,
+          "Paper11" : 2,
+          "Paper13" : 2,
+          "Paper15" : 2,
+          "Scissors5" : 2,
+          "Scissors7" : 2,
+          "Scissors9" : 2,
+          "Scissors11" : 2,
+          "Scissors13" : 2,
+          "Scissors15" : 2
+        }
+      },
+      "Deck2" : {
+        "Name" : "Rush",
+        "Description" : "",
+        "PlayerHPBonus" : 0,
+        "Deck" : {
+          "Rock5" : 4,
+          "Rock7" : 3,
+          "Rock9" : 3,
+          "Rock11" : 2,
+          "Rock13" : 2,
+          "Rock15" : 1,
+          "Paper5" : 4,
+          "Paper7" : 3,
+          "Paper9" : 3,
+          "Paper11" : 2,
+          "Paper13" : 2,
+          "Paper15" : 1,
+          "Scissors5" : 4,
+          "Scissors7" : 3,
+          "Scissors9" : 3,
+          "Scissors11" : 2,
+          "Scissors13" : 2,
+          "Scissors15" : 1,
+          "SkipTurnSpell" : 3,
+          "ShortFreeze" : 0,
+          "LongFreeze" : 0,
+          "BarrierSpell" : 0
+        }
+      }
+    },
+    "entityType" : "decks",
+    "appId" : "22819",
+    "entityId" : "5c15dd53-d93c-4907-b905-8aa6591ccfc9",
+    "acl" : {
+      "other" : 1
+    },
+    "ownerId" : null,
+    "version" : 10,
+    "expiresAt" : 9223372036854775807,
+    "updatedAt" : 1519759306443
+  } ],
+  "suits" : [ {
+    "entityIndexedId" : "config",
+    "timeToLive" : null,
+    "createdAt" : 1519766997719,
+    "data" : {
+      "PLAIN" : {
+        "PLAIN" : 1,
+        "ROCK" : 1,
+        "PAPER" : 1,
+        "SCISSORS" : 1
+      },
+      "ROCK" : {
+        "PLAIN" : 1,
+        "ROCK" : 1,
+        "PAPER" : 1,
+        "SCISSORS" : 2
+      },
+      "PAPER" : {
+        "PLAIN" : 1,
+        "ROCK" : 2,
+        "PAPER" : 1,
+        "SCISSORS" : 1
+      },
+      "SCISSORS" : {
+        "PLAIN" : 1,
+        "ROCK" : 1,
+        "PAPER" : 2,
+        "SCISSORS" : 1
+      }
+    },
+    "entityType" : "suits",
+    "appId" : "22819",
+    "entityId" : "9db21b9b-55c8-44a9-8bd1-123a61fa36ec",
+    "acl" : {
+      "other" : 1
+    },
+    "ownerId" : null,
+    "version" : 2,
+    "expiresAt" : 9223372036854775807,
+    "updatedAt" : 1519833784074
+  } ]
+}

@@ -1,5 +1,4 @@
 let Constants = require('./Constants')
-let mat4 = require('gl-matrix/src/gl-matrix/mat4')
 
 let MAX_SPRITE_COUNT = 100
 
@@ -188,11 +187,20 @@ exports.beginFrame = function()
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     // Set orthographic 2D view
-    let projectionMatrix = mat4.create();
-    mat4.ortho(projectionMatrix, 0, Constants.WIDTH, Constants.HEIGHT, 0, -999, 999)
+    let projectionMatrix = [
+        0.0062500000931322575, 0, 0, 0, 
+        0, -0.008333333767950535, 0, 0, 
+        0, 0, -0.0010010009864345193, 0, 
+        -1, 1, -0, 1
+    ]
 
     // Set the drawing position to the "identity" point, which is top left
-    let modelViewMatrix = mat4.create();
+    let modelViewMatrix = [
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
+    ]
 
     // Tell WebGL how to pull out the positions from the position
     // buffer into the vertexPosition attribute.
