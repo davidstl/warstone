@@ -7,12 +7,14 @@ Turned Based card game, built as an example for brainCloud real-time Room Server
 To play the game now, follow this link:
 http://ec2-18-219-26-183.us-east-2.compute.amazonaws.com:3000/
 
-## How to run your own instance ##
-You might want to modify this example for your own need. For debugging purpose and to familiarize you with the system, it can be agood idea to try to run your own War Stone.
+## How to run your instance ##
+You might want to modify this example, for your individual needs and debugging purposes. 
+
+To further familiarize yourself with the system, it is a good idea to try to run your own War Stone project.
 
 ### Portal setup ###
 We first need to create the application in the brainCloud portal, then upload configuration that defines the settings and rules of the game.
-1. Create a new app, call it `War Stone` or whatever else you want.
+1. Create a new app, call it `War Stone` or your chosen project name.
 
 2. In the **Design / Core App Info / Admin Tools** section of the portal, then **Import Configuration Data** from `portal-configs/configuration-data.bcconfig`.
 3. In the **Design / Cloud Code / Web Services** section of the portal, edit the **Base URL** of the **RSM** service. By default, it points to the example RSM instance.
