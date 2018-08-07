@@ -27,16 +27,31 @@ We first need to create the application in the brainCloud portal, then upload co
    Don't forget to update the URL for the RSM in the portal.
 3. In the file `server/Scripts/S2S.js`, fill in the following information:
    ```
-   const APP_ID = "...";
+   const APP_ID = "..."; // Fill in the appId
    ```
-   Found in **Design / Core App Info / Application IDs**
+   AppId in **Design / Core App Info / Application IDs**
    ```
-   const SERVER_SECRET = "...";
+   const SERVER_SECRET = "..."; // Fill in the server secret
    ```
-   Found in **Design /  Cloud Code / S2S Config / RSM**
-4. It's a nodejs project that you can simply start with:
+   Server secret in **Design /  Cloud Code / S2S Config / RSM**
+4. In the `server/Scripts/RoomServerManager.js`, fill in the following information:
+
+```
+    switch (room.appId)
+        {
+            case "...": // Fill in the appId
+                roomServer = new TurnBasedRoomServer(room, "WarStone");
+                break;
+            default:
+                return null;
+    }
+```
+  AppId in **Design / Core App Info / Application IDs**
+
+5. It's a nodejs project. It can be started by calling the following via the cmdline:
    ```
    cd server/
+   npm install
    node Scripts/main.js
    ```
 
@@ -45,8 +60,8 @@ We first need to create the application in the brainCloud portal, then upload co
 
 2. In the file `src/App.js`, fill in the following in formation:
    ```
-   let appId = "..."
-   let appSecret = "..."
+   let appId = "..." // Fill in the appId
+   let appSecret = "..." // Fill in the appSecret
    ```
    Found in **Design / Core App Info / Application IDs**
 3. Install npm modules: `npm install`
