@@ -237,6 +237,10 @@ module.exports = class GameView extends SpriteNode
         // Global anim helper
         this.anim += dt
 
+        // Update glow sprites to pulse
+        let pulse = Math.sin(this.anim * 8)
+        Resources._sprite_greenGlow = Sprite.makeSprite(-.5 + pulse * .5, 127.5 + pulse * .5, 33 - pulse, 33 - pulse);
+
         this._spriteNodes.forEach((spriteNode, idx) => spriteNode.index = idx)
         this._spriteNodes.sort((a, b) =>
         {

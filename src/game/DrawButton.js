@@ -21,6 +21,11 @@ module.exports = class DrawButton extends SpriteNode
 
     render()
     {
+        if (this._game._myPlayer.getEnergy() >= this._config.DrawCost)
+        {
+            Sprite.renderGlow(this)
+        }
+
         super.render()
         this.drawCost()
     }

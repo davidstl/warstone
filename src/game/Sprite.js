@@ -1,5 +1,6 @@
 let Constants = require("./Constants")
 let Renderer = require("./Renderer")
+let Resources = require("./Resources")
 
 let INV_SPRITESHEET_WIDTH = 1 / Constants.SPRITE_SHEET_DIMENSION.width
 let INV_SPRITESHEET_HEIGHT = 1 / Constants.SPRITE_SHEET_DIMENSION.height
@@ -24,6 +25,17 @@ exports.renderPos = function(sprite, pos)
 exports.renderPosColor = function(sprite, pos, color)
 {
     exports.renderPosDimColor(sprite, pos, {x:sprite.width, y:sprite.height}, color);
+}
+
+exports.renderGlow = function(spriteNode)
+{
+    let pos = {...spriteNode.getPosition()}
+    let dim = {...spriteNode.getDimension()}
+    pos.x -= 10
+    pos.y -= 10
+    dim.x += 20
+    dim.y += 20
+    exports.render9Slice(Resources._sprite_greenGlow, pos, dim, {x:16, y:16, z:16, w:16})
 }
 
 exports.renderPosDim = function(sprite, pos, dimension)

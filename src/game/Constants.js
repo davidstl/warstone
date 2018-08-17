@@ -23,6 +23,7 @@ exports.OUTLINE_COLOR = [24 / 255, 20 / 255, 37 / 255, 1]
 exports.BACKGROUND_COLOR = [38 / 255, 43 / 255, 68 / 255, 1]
 exports.CARD_NUMBER_COLOR = [58 / 255, 68 / 255, 102 / 255, 1]
 exports.ROCK_CARD_NUMBER_COLOR = [1, 1, 1, 1]
+exports.UNPLAYABLE_COLOR = [.8, .8, .8, 1] // Unplayable Card 20% darker
 exports.DOWN_COLOR = [.6, .6, .6, 1] // Button down 40% darker
 exports.ENERGY_COLOR = [44 / 255, 232 / 255, 245 / 255, 1]
 exports.CARD_TEXT_COLOR = [58 / 255, 68 / 255, 102 / 255, 1]

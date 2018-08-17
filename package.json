@@ -5,8 +5,8 @@
   "dependencies": {
     "braincloud-react": "^3.8.0",
     "isomorphic-ws": "^4.0.1",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "react-scripts": "1.1.4"
   },
   "scripts": {

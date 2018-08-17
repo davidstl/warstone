@@ -160,7 +160,7 @@ class App extends Component
             server: null
         })
     }
-
+    
     render()
     {
         switch (this.state.screen)

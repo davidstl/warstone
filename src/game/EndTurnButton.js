@@ -5,23 +5,33 @@ let SpriteNode = require('./SpriteNode')
 
 module.exports = class EndTurnButton extends SpriteNode
 {
-    constructor()
+    constructor(game)
     {
         super()
+
+        this._game = game
         
         this.setSprite(Resources._sprite_btnAdvanceUp)
         this.setDrawOrder(Constants.DRAW_ORDER_ADVANCE_BTN)
         this.setPosition(Constants.ADVANCE_BUTTON_POS)
     }
 
+    render()
+    {
+        if (!this._game.hasMoves(this._game._myPlayer)) Sprite.renderGlow(this)
+        super.render()
+    }
+
     renderHover()
     {
-        Sprite.renderPos(Resources._sprite_btnAdvanceHover, this.getPosition());
+        if (!this._game.hasMoves(this._game._myPlayer)) Sprite.renderGlow(this)
+        Sprite.renderPos(Resources._sprite_btnAdvanceHover, this.getPosition())
     }
 
     renderDown()
     {
-        Sprite.renderPos(Resources._sprite_btnAdvanceDown, this.getPosition());
+        if (!this._game.hasMoves(this._game._myPlayer)) Sprite.renderGlow(this)
+        Sprite.renderPos(Resources._sprite_btnAdvanceDown, this.getPosition())
     }
 
     renderDisabled()

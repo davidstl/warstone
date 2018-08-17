@@ -126,7 +126,7 @@ module.exports = class Player extends SpriteNode
         for (let i = 0; i < config.deck.length; ++i)
         {
             let cardType = config.deck[i]
-            let card = new Card(i, cardType, this._isTopPlayer, this._hand, this._board, this._gameView, this._game, this._config)
+            let card = new Card(i, cardType, this._isTopPlayer, this._hand, this._board, this._gameView, this._game, this._config, this)
             this._cards.push(card)
         }
 

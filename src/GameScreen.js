@@ -339,7 +339,7 @@ class GameScreen extends Component
 
         if (this._state !== Constants.GameState.OPPONENT_TURN)
         {
-            this._drawButton.setEnabled(true)
+            this._drawButton.setEnabled(this._myPlayer.getEnergy() >= this._config.DrawCost)
         }
 
         return true
@@ -359,7 +359,7 @@ class GameScreen extends Component
         }
 
         // Advance button on the right
-        this._endTurnBtn = new EndTurnButton()
+        this._endTurnBtn = new EndTurnButton(this)
         this._endTurnBtn.onClicked = this.endMyTurn.bind(this)
         this._gameView.addSpriteNode(this._endTurnBtn)
         
@@ -370,6 +370,21 @@ class GameScreen extends Component
 
         // Start the main loop
         this._intervaleId = setInterval(this.mainLoop.bind(this), 1000 / FRAME_RATE)
+    }
+
+    // Returns wether or not the player can still play a move
+    hasMoves(player)
+    {
+        // Can draw a card?
+        if (player.getEnergy() >= this._config.DrawCost) return true
+
+        // Has playable card in hands?
+        if (player._hand.some(card => card.isPlayable())) return true
+
+        // Has playable card on board?
+        if (player._board.some(card => card.isPlayable())) return true
+
+        return false
     }
 
     handleTurnTransition(gameStateJson)
@@ -716,7 +731,7 @@ class GameScreen extends Component
         }
 
         this._endTurnBtn.setEnabled(this._state !== Constants.GameState.OPPONENT_TURN);
-        this._drawButton.setEnabled(this._state !== Constants.GameState.OPPONENT_TURN);
+        this._drawButton.setEnabled(this._state !== Constants.GameState.OPPONENT_TURN && this._myPlayer.getEnergy() >= this._config.DrawCost);
     }
     
     onBGClicked()

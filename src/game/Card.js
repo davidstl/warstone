@@ -11,7 +11,7 @@ function safeRemove(array, item)
 
 module.exports = class Card extends SpriteNode
 {
-    constructor(id, type, isTopPlayer, hand, board, gameView, game, config)
+    constructor(id, type, isTopPlayer, hand, board, gameView, game, config, player)
     {
         super()
 
@@ -51,6 +51,7 @@ module.exports = class Card extends SpriteNode
         this._isTopPlayer = isTopPlayer
         this._game = game
         this._config = config
+        this._player = player
         if (Resources._sprite_cardArtMap[type.Art])
         {
             this._cardArt = Resources._sprite_cardArtMap[type.Art]
@@ -342,9 +343,34 @@ module.exports = class Card extends SpriteNode
         }
     }
 
+    isPlayable()
+    {
+        // Make sure we are not top player
+        if (this._isTopPlayer) return false
+
+        // Make sure it's our turn
+        if (this._game._state === Constants.GameState.OPPONENT_TURN || this._game._state === Constants.GameState.END_DIALOG) return false
+
+        // Make sure we have enough energy to play that card
+        // Make sure card hasn't been played yet if on board
+        return (
+            (this._state === Constants.CardState.IN_HAND && this._player.getEnergy() >= this._type.Cost) ||
+            ((this._state === Constants.CardState.ON_BOARD || this._state === Constants.CardState.MOVING_TO_BOARD) && !this._moved)
+        )
+    }
+
+    renderGlow()
+    {
+        if (this.isPlayable())
+        {
+            Sprite.renderGlow(this)
+        }
+    }
+
     render()
     {
         let cardSprite = this.getCardSprite()
+        this.renderGlow()
         Sprite.renderPosColor(cardSprite, this.getPosition(), this.getColor(false))
         this.drawArt(false)
         this.drawBuffs()
@@ -356,6 +382,7 @@ module.exports = class Card extends SpriteNode
     renderHover()
     {
         let cardSprite = this.getCardSprite()
+        this.renderGlow()
         Sprite.renderPosColor(cardSprite, this.getPosition(), this.getColor(false))
         Sprite.renderPosColor(this.getCardHoverSprite(), this.getPosition(), this.getCardHoverColor())
         this.drawArt(false)
@@ -368,6 +395,7 @@ module.exports = class Card extends SpriteNode
     renderDown()
     {
         let cardSprite = this.getCardSprite()
+        this.renderGlow()
         Sprite.renderPosColor(cardSprite, this.getPosition(), this.getColor(false))
         this.drawArt(true)
         this.drawBuffs()
@@ -546,6 +574,10 @@ module.exports = class Card extends SpriteNode
         {
             return Constants.DOWN_COLOR
         }
+        // else if (!this.isPlayable() && this._state === Constants.CardState.IN_HAND && !this._isTopPlayer)
+        // {
+        //     return Constants.UNPLAYABLE_COLOR
+        // }
         else
         {
             return Constants.WHITE

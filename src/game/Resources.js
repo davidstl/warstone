@@ -8,6 +8,7 @@ exports._sprite_ribbon = Sprite.makeSprite(95, 184, 8, 5);
 exports._sprite_dialog = Sprite.makeSprite(1, 190, 16, 17);
 exports._sprite_decoBg = Sprite.makeSprite(62, 190, 14, 14);
 exports._sprite_attackArrow = Sprite.makeSprite(77, 190, 17, 24);
+exports._sprite_greenGlow = Sprite.makeSprite(0, 128, 32, 32);
 
 // buffs
 exports._sprite_taunt = Sprite.makeSprite(1, 219, 10, 11);
@@ -42,7 +43,7 @@ exports._sprite_rockCard = Sprite.makeSprite(95, 1, Constants.CARD_DIM.width, Co
 exports._sprite_paperCard = Sprite.makeSprite(142, 1, Constants.CARD_DIM.width, Constants.CARD_DIM.height);
 exports._sprite_scissorsCard = Sprite.makeSprite(189, 1, Constants.CARD_DIM.width, Constants.CARD_DIM.height);
 
-//Â Card hover states
+// Card hover states
 exports._sprite_hoverCard = Sprite.makeSprite(48, 64, Constants.CARD_DIM.width, Constants.CARD_DIM.height);
 exports._sprite_rockHoverCard = Sprite.makeSprite(95, 64, Constants.CARD_DIM.width, Constants.CARD_DIM.height);
 exports._sprite_paperHoverCard = Sprite.makeSprite(142, 64, Constants.CARD_DIM.width, Constants.CARD_DIM.height);
