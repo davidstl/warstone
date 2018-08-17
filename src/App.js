@@ -6,8 +6,8 @@ import MainMenuScreen from './MainMenuScreen';
 import GameScreen from './GameScreen';
 let brainCloud = require("braincloud-react")
 
-let appId = "" // Fill in the appId
-let appSecret = "" // Fill in the appSecret
+let appId = "" // FILL ME
+let appSecret = "" // FILL ME
 
 class App extends Component
 {
