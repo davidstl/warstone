@@ -1,4 +1,5 @@
 let Constants = require('./Constants')
+import packageJson from '../package.json'
 
 let MAX_SPRITE_COUNT = 100
 
@@ -53,7 +54,7 @@ exports.initialize = function(canvas)
     
     // Asynchronously load an image
     let image = new Image()
-    image.src = "spritesheet.png"
+    image.src = `spritesheet.png?v=${packageJson.version}`
     image.addEventListener('load', () =>
     {
         // Now that the image has loaded make copy it to the texture.
